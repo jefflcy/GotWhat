@@ -119,21 +119,21 @@ The website has a database of restaurants, along with its menu & reviews.
 
 ## **Website User Flow:**
 
-<img src="web userflow.png" alt="userflow"/>
+<img src="./images/web userflow.png" alt="userflow"/>
 
 
 The technical proof is as shown below:
 
-<img src="home.png" alt="Homepage"/>
+<img src="./images/home.png" alt="Homepage"/>
 
-<img src="login.png" alt="login"/>
+<img src="./images/login.png" alt="login"/>
 
-<img src="signup.png" alt="signup"/>
+<img src="./images/signup.png" alt="signup"/>
 
 *Sign Up Page will defer for Business Owners and Customers (yet to implement)*
 
-<img src="request.png" alt="request"/>
+<img src="./images/request.png" alt="request"/>
 
 **RESTAURANT PAGE (YET TO DESIGN/IMPLEMENT):**
 
-<img src="restaurant.png" alt="restaurant"/>
+<img src="./images/restaurant.png" alt="restaurant"/>
