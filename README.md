@@ -133,5 +133,3 @@ _Sign Up Page will defer for Business Owners and Customers (yet to implement)_
 **RESTAURANT PAGE (YET TO DESIGN/IMPLEMENT):**
 
 <img src="restaurant.png" alt="restaurant"/>
-
-HI TESTING IF THIS IS WORKING
