@@ -1,133 +1,139 @@
-﻿<a name="br1"></a>**ORBITAL 23 - MILESTONE 1**
+﻿# **ORBITAL 23 - MILESTONE 1**
 
-**Team Name:**
+## **Team Name:**
 
 GotWhat
 
-**Proposed Level of Achievement:**
+## **Proposed Level of Achievement:**
 
 Gemini
 
-**Motivation:**
+## **Motivation:**
 
-We’ve always asked ourselves these burning questions when deciding to head out for a meal -
+We’ve always asked ourselves these burning questions when deciding to head out for a meal - What is there to eat at the restaurant? Is there an online menu? How much does the food there cost?
 
-What is there to eat at the restaurant? Is there an online menu? How much does the food therecost?
+We then proceed to search on Google in the following format: “[Restaurant Name] menu”. 
 
-We then proceed to search on Google in the following format: “[Restaurant Name] menu”
+If the restaurant has a decent website that displays their menu – great. If not, what we would usually do next is to Google Image search the same prompt, and then be faced with a multitude of blurry images that may or may not even be the right images of the menu. 
 
-If the restaurant has a decent website that displays their menu – great. If not, what we would
+So why isn’t there a centralised platform for restaurants/food business owners to promote and display their menus? Could foodies (consumers) themselves come together to make it a better experience too?
 
-usually do next is to Google Image search the same prompt, and then be faced with a
+## **Aim:**
 
-multitude of blurry images that may or may not even be the right images of the menu. So
+We hope to make restaurant menus (and possibly their latest updates) readily accessible to foodies & the general public through a centralised platform (web app).
 
-why isn’t there a centralised platform for restaurants/food business owners to promote and
+## **User Stories:**
 
-display their menus? Could foodies (consumers) themselves come together to make it a better
+1. As a new customer who has questions about the restaurant’s menu, I want to be able to
+search the restaurant up and get quality answers right away (through menu PDFs).
 
-experience too?
+2. As a new customer who wants to read up about the restaurant, I want to be able to see their basic
+information and reviews.
 
-**Aim:**
+3. As a customer who has visited the restaurant before, I want to be able to leave reviews
+and upload images for others to refer to.
 
-We hope to make restaurant menus (and possibly their latest updates) readily accessible to
+4. As a customer who is unable to find the restaurant on the webpage, I want to be able to fill
+up a form to suggest a listing of the restaurant.
 
-foodies & the general public through a centralised platform (web app).
+5. As a business owner, or marketer who wishes to improve his businesses’ online presence
+and attract customers, I want to be able to upload/update the official menu.
 
-**User Stories:**
-
-1\. As a new customer who has questions about the restaurant’s menu, I want to be able tosearch the restaurant up and get quality answers right away (through menu PDFs).
-
-2\. As a new customer who wants to read up about the restaurant, I want to be able to see their basicinformation and reviews.
-
-3\. As a customer who has visited the restaurant before, I want to be able to leave reviewsand upload images for others to refer to.
-
-4\. As a customer who is unable to find the restaurant on the webpage, I want to be able to fillup a form to suggest a listing of the restaurant.
-
-5\. As a business owner, or marketer who wishes to improve his businesses’ online presenceand attract customers, I want to be able to upload/update the official menu.
-
-6\. As an business owner who wants to prevent misinformation in the reviews section, I wantto be able to reply and rectify any poor reviews provided.
+6. As an business owner who wants to prevent misinformation in the reviews section, I want
+to be able to reply and rectify any poor reviews provided.
 
 
+## **Scope of Project:**
 
-<a name="br2"></a>**ORBITAL 23 - MILESTONE 1**
-
-**Scope of Project:**
-
-The website provides a neat “search engine-like” interface for customers to look for arestaurant’s menu and reviews. Business owners can upload the soft copies of the officialmenus to attract customers online.
+The website provides a neat “search engine-like” interface for customers to look for a restaurant’s menu and reviews. Business owners can upload the soft copies of the official menus to attract customers online.
 
 The website has a database of restaurants, along with its menu & reviews.
 
-Features to be completed by the **mid of June**:
+## **Features to be completed by the mid of June:**
 
-1\. Webpage – Main Functionality
+### 1. Webpage – Main Functionality
 
-a. Allow account creation for business owners / customersb. Allow business owners to upload menu PDFs/imagesc. Allow users to search for a restaurant’s menu
+    a. Allow account creation for business owners / customers
 
-d. Display restaurant basic information (address, operating hours, contact information & social media accounts)
+    b. Allow business owners to upload menu PDFs/images
 
-Features to be completed by the **mid of July**:
+    c. Allow users to search for a restaurant’s menu
 
-2\. Webpage – Review Section
+    d. Display restaurant basic information (address, operating hours, contact information & social media accounts)
 
-a. Allow customers to leave ratings & reviews (& upload photos) for restaurantb. Allow business owners to reply to reviews
+## **Features to be completed by the mid of July:**
 
-3\. Webpage – Request Functionality
+### 2. Webpage – Review Section
 
-a. Allow customers to suggest “missing restaurants” to be listed on webpage
+    a. Allow customers to leave ratings & reviews (& upload photos) for restaurant
 
-b. Allows backend to keep track and possibly contact restaurant to get on our webpage
+    b. Allow business owners to reply to reviews
 
-**Tech Stack:**
+### 3. Webpage – Request Functionality
 
-1\. React (Frontend)
+    a. Allow customers to suggest “missing restaurants” to be listed on webpage
 
-2\. Express + Node.js
+    b. Allow backend to keep track and possibly contact restaurant to get on our webpage
 
-3\. MongoDB (Backend)
+## **Tech Stack:**
 
-**How are we different from similar platforms?**
+1. React (Frontend)
 
-● Burpple
+2. Express + Node.js
 
-○ Our website is more informative, unlike Burpple where most consumers use Burpple for the Beyond feature which is a paid subscription to unlock access to 1-1 deals for certain partnering F&B businesses.
-
-● Oddle
-
-○ Our website is more menu-centric, whereas Oddle is centered more around its food ordering services (Delivery, Pickup, Reservations).
+3. MongoDB (Backend)
 
 
+## **How are we different from similar platforms?**
 
-<a name="br3"></a>**ORBITAL 23 - MILESTONE 1**
+- Burpple
 
-**Development Plan:**
+    - Our website is more informative, unlike Burpple where most consumers use Burpple for the Beyond feature which is a paid subscription to unlock access to 1-1 deals for certain partnering F&B businesses.
 
-**2nd week of May:** Finalise deliverables for Orbital Lift-off
+- Oddle
 
-**3rd week of May:** Technical Knowledge Research - React, Nodejs, Expressjs, MongoDB, Git**4th week of May:** Pick up technologies, Initialize project and design frontend**1st week of June:** Design portal for business owners to edit restaurant menu/info**2nd week of June:** Design restaurant information page
-
-**3rd week of June:** Implement search functionality to search for restaurants**4th week of June:** Testing and debugging
-
-**1st week of July:** Implement additional capabilities – Review Section, Request Functionality**2nd week of July:** Implementation of peer teams’ suggestions
-
-**3rd week of July:** Testing and debugging
-
-**Website User Flow:**
+    - Our website is more menu-centric, whereas Oddle is centered more around its food ordering services (Delivery, Pickup, Reservations).
 
 
+## **Development Plan:**
 
-<a name="br4"></a>**ORBITAL 23 - MILESTONE 1**
+2nd week of May: Finalise deliverables for Orbital Lift-off
 
-The **technical proof** is as shown below:
+3rd week of May: Technical Knowledge Research - React, Nodejs, Expressjs, MongoDB, Git
+
+4th week of May: Pick up technologies, Initialize project and design frontend
+
+1st week of June: Design portal for business owners to edit restaurant menu/info
+
+2nd week of June: Design restaurant information page
+
+3rd week of June: Implement search functionality to search for restaurants
+
+4th week of June: Testing and debugging
+
+1st week of July: Implement additional capabilities – Review Section, Request Functionality
+
+2nd week of July: Implementation of peer teams’ suggestions
+
+3rd week of July: Testing and debugging
+
+## **Website User Flow:**
+
+<img src="web userflow.png" alt="userflow"/>
 
 
+The technical proof is as shown below:
 
-<a name="br5"></a>**ORBITAL 23 - MILESTONE 1**
+<img src="home.png" alt="Homepage"/>
+
+<img src="login.png" alt="login"/>
+
+<img src="signup.png" alt="signup"/>
 
 *Sign Up Page will defer for Business Owners and Customers (yet to implement)*
 
+<img src="request.png" alt="request"/>
 
+**RESTAURANT PAGE (YET TO DESIGN/IMPLEMENT):**
 
-<a name="br6"></a>**ORBITAL 23 - MILESTONE 1**
-
-**RESTAURANT PAGE** (YET TO DESIGN/IMPLEMENT):
+<img src="restaurant.png" alt="restaurant"/>
