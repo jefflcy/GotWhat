@@ -3,10 +3,12 @@ import SideMenu from "../components/SideMenu";
 
 export default function HomePage() {
   return (
-    <div>
+    <>
       <SideMenu />
-      <h1>GotWhat</h1>
-      <SearchBar />
-    </div>
+      <div className="pt-10 px-5">
+        <h1 className="text-center text-5xl font-bold py-8">GotWhat</h1>
+        <SearchBar />
+      </div>
+    </>
   );
 }
