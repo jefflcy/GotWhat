@@ -12,9 +12,9 @@ Gemini
 
 We’ve always asked ourselves these burning questions when deciding to head out for a meal - What is there to eat at the restaurant? Is there an online menu? How much does the food there cost?
 
-We then proceed to search on Google in the following format: “[Restaurant Name] menu”. 
+We then proceed to search on Google in the following format: “[Restaurant Name] menu”.
 
-If the restaurant has a decent website that displays their menu – great. If not, what we would usually do next is to Google Image search the same prompt, and then be faced with a multitude of blurry images that may or may not even be the right images of the menu. 
+If the restaurant has a decent website that displays their menu – great. If not, what we would usually do next is to Google Image search the same prompt, and then be faced with a multitude of blurry images that may or may not even be the right images of the menu.
 
 So why isn’t there a centralised platform for restaurants/food business owners to promote and display their menus? Could foodies (consumers) themselves come together to make it a better experience too?
 
@@ -25,23 +25,22 @@ We hope to make restaurant menus (and possibly their latest updates) readily acc
 ## **User Stories:**
 
 1. As a new customer who has questions about the restaurant’s menu, I want to be able to
-search the restaurant up and get quality answers right away (through menu PDFs).
+   search the restaurant up and get quality answers right away (through menu PDFs).
 
 2. As a new customer who wants to read up about the restaurant, I want to be able to see their basic
-information and reviews.
+   information and reviews.
 
 3. As a customer who has visited the restaurant before, I want to be able to leave reviews
-and upload images for others to refer to.
+   and upload images for others to refer to.
 
 4. As a customer who is unable to find the restaurant on the webpage, I want to be able to fill
-up a form to suggest a listing of the restaurant.
+   up a form to suggest a listing of the restaurant.
 
 5. As a business owner, or marketer who wishes to improve his businesses’ online presence
-and attract customers, I want to be able to upload/update the official menu.
+   and attract customers, I want to be able to upload/update the official menu.
 
 6. As an business owner who wants to prevent misinformation in the reviews section, I want
-to be able to reply and rectify any poor reviews provided.
-
+   to be able to reply and rectify any poor reviews provided.
 
 ## **Scope of Project:**
 
@@ -83,17 +82,15 @@ The website has a database of restaurants, along with its menu & reviews.
 
 3. MongoDB (Backend)
 
-
 ## **How are we different from similar platforms?**
 
 - Burpple
 
-    - Our website is more informative, unlike Burpple where most consumers use Burpple for the Beyond feature which is a paid subscription to unlock access to 1-1 deals for certain partnering F&B businesses.
+  - Our website is more informative, unlike Burpple where most consumers use Burpple for the Beyond feature which is a paid subscription to unlock access to 1-1 deals for certain partnering F&B businesses.
 
 - Oddle
 
-    - Our website is more menu-centric, whereas Oddle is centered more around its food ordering services (Delivery, Pickup, Reservations).
-
+  - Our website is more menu-centric, whereas Oddle is centered more around its food ordering services (Delivery, Pickup, Reservations).
 
 ## **Development Plan:**
 
@@ -121,7 +118,6 @@ The website has a database of restaurants, along with its menu & reviews.
 
 <img src="./images/web userflow.png" alt="userflow"/>
 
-
 The technical proof is as shown below:
 
 <img src="./images/home.png" alt="Homepage"/>
@@ -130,7 +126,7 @@ The technical proof is as shown below:
 
 <img src="./images/signup.png" alt="signup"/>
 
-*Sign Up Page will defer for Business Owners and Customers (yet to implement)*
+_Sign Up Page will defer for Business Owners and Customers (yet to implement)_
 
 <img src="./images/request.png" alt="request"/>
 
