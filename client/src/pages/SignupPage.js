@@ -22,12 +22,11 @@ export default function SignupPage() {
       window.alert('Passwords do not match!');
       return;
     }
-  }
+  };
 
   const handleToggle = () => {
     setIsChecked(!isChecked);
   };
-
 
   return (
     <div className="bg-[#365b6d] h-screen">
@@ -50,7 +49,7 @@ export default function SignupPage() {
           className="sr-only"/>
           <div className="toggle-slider w-10 h-6 bg-gray-400 rounded-full shadow-inner" />
           <div className={`toggle-knob absolute w-4 h-4 bg-white rounded-full transition-transform duration-300 transform ${isChecked ? 'translate-x-6' : ''}`} />
-          <span className="ml-2 text-white text-md font-bold">{isChecked ? 'Business Owner' : 'Personal'}</span>
+          <span className="left-2 ml-2 text-white text-md font-bold">{isChecked ? 'Business Owner' : 'Personal'}</span>
         </label>
       </div>
 
