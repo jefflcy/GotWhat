@@ -25,10 +25,11 @@ export default function LoginPage() {
 
       const token = response.data.token;
 
-      // Save the token in localStorage or a state management solution (e.g., Redux) for future use
-      console.log(token);
+      // Save the token in localStorage
+      localStorage.setItem("token", token);
+      console.log("token", token);
 
-      // Redirect the user to a protected page or perform other actions as needed
+      // Redirect the user to account page
     } catch (error) {
       console.error(error);
     }

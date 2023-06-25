@@ -38,6 +38,7 @@ export default function SignupPage() {
         const newUser = {
           email,
           password,
+          role: isChecked ? "business" : "user",
         };
         const { data } = await axios.post(
           "http://localhost:4000/signup",
