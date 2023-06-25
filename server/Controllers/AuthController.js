@@ -1,11 +1,10 @@
 const User = require("../Models/UserModel");
 const { createSecretToken } = require("../util/SecretToken");
 const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken");
 
 module.exports.Signup = async (req, res, next) => {
   try {
-    const { email, password, username, createdAt, role } = req.body;
+    const { email, password, role } = req.body;
 
     const existingUser = await User.findOne({ email });
 
@@ -16,8 +15,6 @@ module.exports.Signup = async (req, res, next) => {
     const user = await User.create({
       email,
       password,
-      username,
-      createdAt,
       role,
     });
 
@@ -30,11 +27,11 @@ module.exports.Signup = async (req, res, next) => {
 
     res
       .status(201)
-      .json({ message: "User signed in successfully", success: true, user });
+      .json({ message: "User signed up successfully", success: true, user });
 
     next();
   } catch (error) {
-    console.error(error);
+    res.status(500).json({ message: "Internal server error" });
   }
 };
 
@@ -42,28 +39,27 @@ module.exports.Login = async (req, res, next) => {
   const { email, password } = req.body;
 
   try {
-    // Validate inputs (e.g., check for required fields)
     if (!email || !password) {
       return res.status(400).json({ message: "Please fill in all fields" });
     }
 
-    // Check if the user exists
     const user = await User.findOne({ email });
     if (!user) {
       return res.status(400).json({ message: "Invalid credentials" });
     }
 
-    // Compare passwords
     const isPasswordValid = await bcrypt.compare(password, user.password);
     if (!isPasswordValid) {
       return res.status(400).json({ message: "Invalid credentials" });
     }
 
-    // Generate JWT token
-    const token = jwt.sign({ userId: user._id }, "jeppy");
+    const token = createSecretToken(user._id);
 
-    // Return the token
-    res.json({ token });
+    res
+      .status(201)
+      .json({ message: "User signed in successfully", success: true, token });
+
+    next();
   } catch (error) {
     res.status(500).json({ message: "Internal server error" });
   }
