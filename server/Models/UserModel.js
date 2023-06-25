@@ -36,6 +36,10 @@ const userSchema = new mongoose.Schema({
     type: Buffer,
     contentType: String,
   },
+  banner: {
+    type: Buffer,
+    contentType: String,
+  },
 });
 
 userSchema.pre("save", async function (next) {
