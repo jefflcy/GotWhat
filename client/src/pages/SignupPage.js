@@ -64,11 +64,12 @@ export default function SignupPage() {
   return (
     <div className="bg-[#365b6d] h-screen">
       <SideMenu />
-      <div className="justify-center py-8 lg:px-8 text-center font-bold text-white">
-        <h2 className="text-3xl leading-9 tracking-tight">Sign Up</h2>
-        <p className="text-md">
-          Please fill in this form to create an account.
-        </p>
+      <div className="justify-center pt-24 pb-8 lg:px-8 text-center font-bold text-white">
+        <h2 className="text-3xl leading-9 tracking-tight">
+          Sign Up
+        </h2>
+        <p className="text-md">Please fill in this form to create an account.</p>
+
       </div>
       <div className="flex justify-center">
         <label className="toggle-switch flex items-center cursor-pointer">
@@ -164,7 +165,9 @@ export default function SignupPage() {
               type="submit"
               className="justify-center rounded-md bg-green-600 px-8 m-2 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-green-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-600"
             >
+
               Sign up
+
             </button>
           </div>
         </form>
