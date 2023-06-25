@@ -2,8 +2,6 @@ import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { HomePage, LoginPage, SignupPage, RestaurantPage, UserAccountPage, ChangePasswordPage } from "./pages";
 
-// document.body.style.backgroundColor = "#365b6d";
-
 export default function App() {
   return (
     <div className="App">

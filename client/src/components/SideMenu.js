@@ -1,5 +1,5 @@
-import { useState } from "react"
-import {AiOutlineClose, AiOutlineMenu} from 'react-icons/ai';
+import { useState } from "react";
+import { AiOutlineClose, AiOutlineMenu } from "react-icons/ai";
 
 export default function SideMenu() {
   const [isOpen, setIsOpen] = useState(false);
@@ -10,7 +10,6 @@ export default function SideMenu() {
 
   return (
     <div className="px-5">
-
       <button onClick={toggleMenu} className='block text-white absolute top-6'>
         {isOpen ? <AiOutlineClose size={30} /> : <AiOutlineMenu size={30} />}
       </button>
@@ -22,8 +21,7 @@ export default function SideMenu() {
         <li className='p-4 border-b border-black'><a href="/restaurant">Mock</a></li>
         <li className='p-4 '><a href="#">Request</a></li>
       </ul>
+      </div>
     </div>
-    
-  </div>
   );
 }
