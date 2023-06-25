@@ -6,9 +6,9 @@ export default function LoginPage() {
      
       <SideMenu />
 
-      <div className="flex flex-1 justify-center py-8 lg:px-8">
+      <div className="flex flex-1 justify-center pt-40 lg:px-8">
         <h2 className="text-center text-3xl font-bold leading-9 tracking-tight text-white">
-          Sign in to your account
+          Log in to your account
         </h2>
       </div>
 
@@ -64,12 +64,13 @@ export default function LoginPage() {
           </div>
 
           <div>
-            <button
-              type="submit"
-              className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-            >
-              Sign in
-            </button>
+            <a href='#'>
+              <button
+                type="submit"
+                className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+              Log in
+              </button>
+            </a>
           </div>
         </form>
 

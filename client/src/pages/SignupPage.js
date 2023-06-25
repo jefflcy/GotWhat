@@ -33,7 +33,7 @@ export default function SignupPage() {
 
       <SideMenu />
 
-      <div className="justify-center py-8 lg:px-8 text-center font-bold text-white">
+      <div className="justify-center pt-24 pb-8 lg:px-8 text-center font-bold text-white">
         <h2 className="text-3xl leading-9 tracking-tight">
           Sign Up
         </h2>
@@ -128,7 +128,7 @@ export default function SignupPage() {
               type="submit"
               className="justify-center rounded-md bg-green-600 px-8 m-2 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-green-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-600"
             >
-            Sign in
+            Sign up
             </button>
         </div>
         
