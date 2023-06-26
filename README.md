@@ -138,7 +138,7 @@ FEATURES TO BE COMPLETED:
 
 <img src="./images/home.png" alt="Homepage"/>
 
-<img src="./images/login.png" alt="login"/>
+<img src="./images/newlogin.png" alt="login"/>
 
 <img src="./images/signup.png" alt="signup"/>
 
