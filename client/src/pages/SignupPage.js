@@ -8,56 +8,39 @@ export default function SignupPage() {
   const [password, setPassword] = useState("");
   const [repeatpassword, setRepeatPassword] = useState("");
   const [isChecked, setIsChecked] = useState(false);
-
-  const handleEmailChange = (input) => {
-    setEmail(input.target.value);
-  };
-
-  const handlePasswordChange = (input) => {
-    setPassword(input.target.value);
-  };
-
-  const handleRepeatPassword = (input) => {
-    setRepeatPassword(input.target.value);
-  };
+  const navigate = useNavigate();
 
   /* Toggle between Personal and Business Owner */
   const handleToggle = () => {
     setIsChecked(!isChecked);
   };
 
-  const navigate = useNavigate();
-
   const handleSubmit = async (input) => {
     input.preventDefault();
 
-    if (password !== repeatpassword) {
-      window.alert("Passwords do not match!");
-    } else {
-      try {
-        const newUser = {
-          email,
-          password,
-          role: isChecked ? "business" : "user",
-        };
-        const { data } = await axios.post(
-          "http://localhost:4000/signup",
-          newUser
-        );
-        console.log(data);
+    if (password !== repeatpassword) return alert("Passwords do not match!");
 
-        // Clear the form fields
-        setEmail("");
-        setPassword("");
-        setRepeatPassword("");
-        setIsChecked(false);
+    try {
+      const newUser = {
+        email,
+        password,
+        role: isChecked ? "business" : "user",
+      };
+      const { data } = await axios.post(
+        "http://localhost:4000/signup",
+        newUser
+      );
 
-        // Redirect to the login page if signup is successful
-        data.success && navigate("/login");
-      } catch (error) {
-        // Display error message if request fails
-        console.log(error);
-      }
+      // Clear the form fields
+      setEmail("");
+      setPassword("");
+      setRepeatPassword("");
+      setIsChecked(false);
+
+      // Redirect to the login page if signup is successful
+      data.success && navigate("/login");
+    } catch (error) {
+      alert(error.response.data.error);
     }
   };
 
@@ -65,11 +48,10 @@ export default function SignupPage() {
     <div className="bg-[#365b6d] h-screen">
       <SideMenu />
       <div className="justify-center pt-24 pb-8 lg:px-8 text-center font-bold text-white">
-        <h2 className="text-3xl leading-9 tracking-tight">
-          Sign Up
-        </h2>
-        <p className="text-md">Please fill in this form to create an account.</p>
-
+        <h2 className="text-3xl leading-9 tracking-tight">Sign Up</h2>
+        <p className="text-md">
+          Please fill in this form to create an account.
+        </p>
       </div>
       <div className="flex justify-center">
         <label className="toggle-switch flex items-center cursor-pointer">
@@ -99,7 +81,7 @@ export default function SignupPage() {
             <input
               type="email"
               value={email}
-              onChange={handleEmailChange}
+              onChange={(e) => setEmail(e.target.value)}
               placeholder="jefflee@hotmail.com"
               autoComplete="email"
               required
@@ -108,37 +90,27 @@ export default function SignupPage() {
           </div>
 
           <div>
-            <label
-              htmlFor="password"
-              className="block text-large font-bold leading-6 text-gray-900"
-            >
+            <label className="block text-large font-bold leading-6 text-gray-900">
               Password
             </label>
             <input
               type="password"
               value={password}
               placeholder="********"
-              autoComplete="password"
-              onChange={handlePasswordChange}
+              onChange={(e) => setPassword(e.target.value)}
               required
               className="mt-4 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
             />
           </div>
 
           <div>
-            <label
-              htmlFor="repeatpassword"
-              className="block text-large font-bold leading-6 text-gray-900"
-            >
+            <label className="block text-large font-bold leading-6 text-gray-900">
               Repeat Password
             </label>
             <input
-              id="repeatpassword"
-              name="repeatpassword"
               type="password"
               placeholder="********"
-              autoComplete="reapeatpassword"
-              onChange={handleRepeatPassword}
+              onChange={(e) => setRepeatPassword(e.target.value)}
               required
               className="mt-4 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
             />
@@ -165,9 +137,7 @@ export default function SignupPage() {
               type="submit"
               className="justify-center rounded-md bg-green-600 px-8 m-2 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-green-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-600"
             >
-
               Sign up
-
             </button>
           </div>
         </form>

@@ -1,37 +1,31 @@
 import SideMenu from "../components/SideMenu";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
-  const handleEmailChange = (input) => {
-    setEmail(input.target.value);
-  };
-
-  const handlePasswordChange = (input) => {
-    setPassword(input.target.value);
-  };
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
-      const response = await axios.post("http://localhost:4000/login", {
-        email,
-        password,
-      });
+      const user = { email, password };
+      const { data } = await axios.post("http://localhost:4000/login", user);
 
-      const token = response.data.token;
+      const token = data.token;
 
       // Save the token in localStorage
       localStorage.setItem("token", token);
-      console.log("token", token);
+      alert(data.message);
 
       // Redirect the user to account page
+      data.success && navigate("/");
+      //navigate(`/user/${data.user._id}`);
     } catch (error) {
-      console.error(error);
+      alert(error.response.data.message);
     }
   };
   return (
@@ -54,7 +48,7 @@ export default function LoginPage() {
               type="email"
               placeholder="jefflee@hotmail.com"
               value={email}
-              onChange={handleEmailChange}
+              onChange={(e) => setEmail(e.target.value)}
               autoComplete="email"
               required
               className="mt-4 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
@@ -63,10 +57,7 @@ export default function LoginPage() {
 
           <div>
             <div className="flex items-center justify-between">
-              <label
-                htmlFor="password"
-                className="block text-large font-bold leading-6 text-gray-900"
-              >
+              <label className="block text-large font-bold leading-6 text-gray-900">
                 Password
               </label>
               <div className="text-sm">
@@ -84,7 +75,7 @@ export default function LoginPage() {
                 type="password"
                 placeholder="********"
                 value={password}
-                onChange={handlePasswordChange}
+                onChange={(e) => setPassword(e.target.value)}
                 autoComplete="current-password"
                 required
                 className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
@@ -93,11 +84,12 @@ export default function LoginPage() {
           </div>
 
           <div>
-            <a href='#'>
+            <a href="#">
               <button
                 type="submit"
-                className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
-              Log in
+                className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+              >
+                Log in
               </button>
             </a>
           </div>
