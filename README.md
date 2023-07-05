@@ -1,4 +1,4 @@
-﻿# **ORBITAL 23 - MILESTONE 1**
+﻿# **ORBITAL 23 - MILESTONE 2**
 
 ## **Team Name:**
 
@@ -60,7 +60,27 @@ The website has a database of restaurants, along with its menu & reviews.
 
     d. Display restaurant basic information (address, operating hours, contact information & social media accounts)
 
-## **Features to be completed by the mid of July:**
+## **MILESTONE 2 UPDATE**
+
+FEATURES COMPLETED:
+
+- Web Page frontend on React (Home, Login, Signup, Restaurant, User Account, Change Password)
+
+- Navigation Bar
+
+- Signup/Login Routing for both front and backend with MongoDB
+
+FEATURES TO BE COMPLETED:
+
+- Successful signup/login notices and page navigation upon successful request
+
+- Protected Routes with JWT
+
+- Updating of user account details (name for normal user, basic info + menu for business owners)
+
+- Backend API for fetching of user data and Search results
+
+## **Features to be completed by the END of July:**
 
 ### 2. Webpage – Review Section
 
@@ -94,50 +114,38 @@ The website has a database of restaurants, along with its menu & reviews.
 
 ## **Development Plan:**
 
-2nd week of May: Finalise deliverables for Orbital Lift-off
+1st week of July:
 
-3rd week of May: Technical Knowledge Research - React, Nodejs, Expressjs, MongoDB, Git
+- Implement portal for business owners to edit restaurant menu/user to edit user info
+- Design successful login notice
+- Design search results containter
+- Backend API for search results + routing
 
-4th week of May: Pick up technologies, Initialize project and design frontend
+2nd week of July:
 
-1st week of June: Design portal for business owners to edit restaurant menu/info
+- Implementation of Review Section
+- Implementation of Request Page
 
-2nd week of June: Design restaurant information page
+3rd week of July:
 
-3rd week of June: Implement search functionality to search for restaurants
-
-4th week of June: Testing and debugging
-
-1st week of July: Implement additional capabilities – Review Section, Request Functionality
-
-2nd week of July: Implementation of peer teams’ suggestions
-
-3rd week of July: Testing and debugging
+- Testing and debugging
 
 ## **Website User Flow:**
 
 <img src="./images/web userflow.png" alt="userflow"/>
 
-The technical proof is as shown below:
+## **User Interface:**
 
 <img src="./images/home.png" alt="Homepage"/>
 
-<img src="./images/login.png" alt="login"/>
+<img src="./images/newlogin.png" alt="login"/>
 
 <img src="./images/signup.png" alt="signup"/>
 
-_Sign Up Page will defer for Business Owners and Customers (yet to implement)_
+<img src="./images/ua.png" alt="userAcc"/>
+
+<img src="./images/change.png" alt="changePw"/>
+
+<img src="./images/restaurant.png" alt="restaurant"/>
 
 <img src="./images/request.png" alt="request"/>
-
-**RESTAURANT PAGE (YET TO DESIGN/IMPLEMENT):**
-
-<<<<<<< HEAD
-<<<<<<< HEAD
-<img src="restaurant.png" alt="restaurant"/>
-=======
-<img src="./images/restaurant.png" alt="restaurant"/>
->>>>>>> 218ecf2523878799b53680bd5fe4a48fde578dad
-=======
-<img src="./images/restaurant.png" alt="restaurant"/>
->>>>>>> fba0caad96ac4fed2d7c227cd99a6c2ba3c9d7d3
