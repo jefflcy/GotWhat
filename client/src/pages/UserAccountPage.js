@@ -18,21 +18,21 @@ const UserAccountPage = () => {
             <label className="block text-white text-3xl uppercase font-bold text-decoration-line: underline  mb-2">
                 Username
             </label>
-            <input type="text" className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" placeholder="lucky.jesse" />
+            <input type="text" className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" placeholder="Alvin Seah" />
           </div>
 
           <div className="pt-4">
             <label className="block text-white text-3xl uppercase font-bold text-decoration-line: underline  mb-2">
                 Email Address
             </label>
-            <input type="text" className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" value="lucky.jesse" />
+            <input type="text" className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" value="alvin@mail.com" />
           </div>          
 
           <div className="flex flex-col pt-4">
             <label className="block text-white text-3xl uppercase font-bold text-decoration-line: underline  mb-2">
                 Password
             </label>
-            <input type="text" className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" value="lucky.jesse" />
+            <input type="text" className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" value="*******sse" />
             <div className="self-end">
               <a href="/changepassword" className="text-md text-blue-600 hover:text-blue-500 right-0">
               Change password?
