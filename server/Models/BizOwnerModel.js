@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
 
-const userSchema = new mongoose.Schema({
+const bizSchema = new mongoose.Schema({
   email: {
     type: String,
     trim: true,
@@ -22,15 +22,31 @@ const userSchema = new mongoose.Schema({
     type: Buffer,
     contentType: String,
   },
+  operatingHours: {
+    type: String,
+  },
+  address: {
+    type: String,
+  },
+  contact: {
+    type: String,
+  },
+  menu: {
+    type: Buffer,
+    contentType: String,
+  },
+  banner: {
+    type: Buffer,
+    contentType: String,
+  },
   role: {
     type: String,
-    enum: ["user", "biz"],
   },
 });
 
-userSchema.pre("save", async function (next) {
+bizSchema.pre("save", async function (next) {
   this.password = await bcrypt.hash(this.password, 10);
   next();
 });
 
-module.exports = mongoose.model("User", userSchema);
+module.exports = mongoose.model("Business Owners", bizSchema);
