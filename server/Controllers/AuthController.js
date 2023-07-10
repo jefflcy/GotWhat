@@ -1,22 +1,28 @@
 const User = require("../Models/UserModel");
+const BizOwner = require("../Models/BizOwnerModel");
 const { createSecretToken } = require("../util/SecretToken");
 const bcrypt = require("bcryptjs");
 
 module.exports.Signup = async (req, res) => {
-  const { email, password, role } = req.body;
-
   try {
-    // Check if user exists
-    const existingUser = await User.findOne({ email });
-    if (existingUser) {
+    const { email, password, role } = req.body;
+    let model;
+    role === "user" ? (model = User) : (model = BizOwner);
+
+    // Check if user/biz exists
+    const { existingUser, existingBiz } = await Promise.all([
+      User.findOne({ email }),
+      BizOwner.findOne({ email }),
+    ]);
+
+    if (existingUser || existingBiz) {
       return res.status(401).json({ message: "User already exists" });
     }
 
-    // Create the new user in UserModel
-    const user = await User.create({
+    // Create the new user/biz in UserModel/BizOwnerModel
+    const user = await model.create({
       email,
       password,
-      role,
     });
 
     // Create token and send it in a cookie
@@ -37,23 +43,28 @@ module.exports.Signup = async (req, res) => {
 };
 
 module.exports.Login = async (req, res) => {
-  const { email, password } = req.body;
-
   try {
-    // Check if user exists
-    const user = await User.findOne({ email });
-    if (!user) {
+    const { email, password } = req.body;
+
+    // Check if user/biz exists
+    const { existingUser, existingBiz } = await Promise.all([
+      User.findOne({ email }),
+      BizOwner.findOne({ email }),
+    ]);
+    if (!existingUser && !existingBiz) {
       return res.status(400).json({ message: "User does not exist!" });
     }
 
+    let account = existingUser || existingBiz;
+
     // Check if password is valid
-    const isPasswordValid = await bcrypt.compare(password, user.password);
+    const isPasswordValid = await bcrypt.compare(password, account.password);
     if (!isPasswordValid) {
       return res.status(401).json({ message: "Invalid email/password!" });
     }
 
     // Create token and send it in a cookie
-    const token = createSecretToken(user._id);
+    const token = createSecretToken(account._id);
     res.cookie("token", token, {
       withCredentials: true,
       httpOnly: false,

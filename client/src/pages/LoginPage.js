@@ -7,13 +7,14 @@ export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
+  const backendUrl = process.env.BACKEND_URL;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
       const user = { email, password };
-      const { data } = await axios.post("http://localhost:4000/login", user);
+      const { data } = await axios.post(backendUrl + "/auth/login", user);
 
       const token = data.token;
 

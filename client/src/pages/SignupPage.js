@@ -9,6 +9,7 @@ export default function SignupPage() {
   const [repeatpassword, setRepeatPassword] = useState("");
   const [isChecked, setIsChecked] = useState(false);
   const navigate = useNavigate();
+  const backendUrl = process.env.BACKEND_URL;
 
   /* Toggle between Personal and Business Owner */
   const handleToggle = () => {
@@ -26,10 +27,7 @@ export default function SignupPage() {
         password,
         role: isChecked ? "business" : "user",
       };
-      const { data } = await axios.post(
-        "http://localhost:4000/signup",
-        newUser
-      );
+      const { data } = await axios.post(backendUrl + "/auth/signup", newUser);
 
       // Clear the form fields
       setEmail("");

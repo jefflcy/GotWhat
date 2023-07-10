@@ -8,9 +8,10 @@ const cors = require("cors");
 const cookieParser = require("cookie-parser");
 
 require("dotenv").config();
-/*const { MONGO_URL, PORT } = process.env;
+const { MONGO_URL, PORT } = process.env;
 
 const authRoute = require("./Routes/AuthRoute");
+const searchRoute = require("./Routes/SearchRoute");
 
 mongoose
   .connect(MONGO_URL, {
@@ -23,17 +24,9 @@ mongoose
 //listen for requests
 app.listen(PORT, () => {
   console.log(`Server is listening on port ${PORT}`);
-});*/
-
-app.get('/', (req, res) => {
-  res.json({mssg: 'Welcome'})
-})
-
-app.listen(process.env.PORT, () => {
-  console.log(`Server is listening on port ${process.env.PORT}`);
 });
 
-/*app.use(
+app.use(
   cors({
     origin: ["http://localhost:3000"],
     methods: ["GET", "POST", "PUT", "DELETE"],
@@ -45,4 +38,5 @@ app.use(cookieParser());
 
 app.use(express.json());
 
-app.use("/", authRoute);*/
+app.use("/api", authRoute);
+app.use("/api", searchRoute);
