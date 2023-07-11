@@ -7,14 +7,14 @@ export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
-  const backendUrl = process.env.BACKEND_URL;
+  const backendUrl = process.env.REACT_APP_BACKEND_URL;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
       const user = { email, password };
-      const { data } = await axios.post(backendUrl + "/auth/login", user);
+      const { data } = await axios.post(backendUrl + "/login", user);
 
       const token = data.token;
 
@@ -23,7 +23,7 @@ export default function LoginPage() {
       alert(data.message);
 
       // Redirect the user to account page
-      data.success && navigate("/");
+      data.success && navigate("/home");
       //navigate(`/user/${data.user._id}`);
     } catch (error) {
       alert(error.response.data.message);
