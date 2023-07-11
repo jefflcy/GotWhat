@@ -10,7 +10,7 @@ module.exports.Signup = async (req, res) => {
     role === "user" ? (model = User) : (model = BizOwner);
 
     // Check if user/biz exists
-    const { existingUser, existingBiz } = await Promise.all([
+    const [existingUser, existingBiz] = await Promise.all([
       User.findOne({ email }),
       BizOwner.findOne({ email }),
     ]);
@@ -47,7 +47,7 @@ module.exports.Login = async (req, res) => {
     const { email, password } = req.body;
 
     // Check if user/biz exists
-    const { existingUser, existingBiz } = await Promise.all([
+    const [existingUser, existingBiz] = await Promise.all([
       User.findOne({ email }),
       BizOwner.findOne({ email }),
     ]);
