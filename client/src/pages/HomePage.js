@@ -29,7 +29,7 @@ export default function HomePage() {
         <div>
           {searchResults.map((result) => (
             <Link
-              to={`/restaurant/${result.id}`}
+              to={`/restaurant/${result._id}`}
               className="absolute bg-white border border-gray-300 py-2 px-3 rounded shadow-lg"
               key={result._id}
             >
