@@ -16,7 +16,7 @@ export default function SearchBar({ onSearch }) {
   return (
     <div className="mb-3">
       <form>
-        <div className="mb-4 flex flex-wrap max-w-[600px] mx-auto text-white border rounded">
+        <div className="flex flex-wrap max-w-[600px] mx-auto text-white border rounded">
           <input
             type="search"
             value={searchQuery}

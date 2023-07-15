@@ -30,7 +30,7 @@ export default function HomePage() {
           {searchResults.map((result) => (
             <Link
               to={`/restaurant/${result._id}`}
-              className="absolute bg-white border border-gray-300 py-2 px-3 rounded shadow-lg"
+              className=" flex flex-wrap mx-auto border border-transparent rounded p-3 w-[600px] max-h-[300px] text-black bg-white overflow-y-scroll"
               key={result._id}
             >
               {result.name}
