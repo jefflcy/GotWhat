@@ -25,7 +25,7 @@ export default function RequestPage() {
   };
 
   return (
-    <div className="bg-[#365b6d] h-screen">
+    <div className="bg-[#365b6d] h-screen py-24 ">
       <SideMenu />
       <div className="max-w-md mx-auto p-6 bg-white border rounded shadow">
         <h2 className="text-xl font-bold mb-4">Request a Restaurant</h2>
