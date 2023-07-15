@@ -1,29 +1,44 @@
-import SideMenu from "../components/SideMenu";
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import SideMenu from "../components/SideMenu";
+import { useContext, useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { AuthContext } from "../contexts/AuthContext";
 
 export default function LoginPage() {
+  const { isAuthenticated, login } = useContext(AuthContext);
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const navigate = useNavigate();
   const backendUrl = process.env.REACT_APP_BACKEND_URL;
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      alert("You are already logged in!");
+      navigate("/home");
+    }
+  }, [navigate, isAuthenticated]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
       const user = { email, password };
-      const { data } = await axios.post(backendUrl + "/login", user);
+      const { data } = await axios.post(`${backendUrl}/login`, user, {
+        withCredentials: true,
+      });
 
-      const token = data.token;
+      if (data.success) {
+        const token = data.token;
 
-      // Save the token in localStorage
-      localStorage.setItem("token", token);
-      alert(data.message);
+        // Store token in context and localStorage
+        login(token);
 
-      // Redirect the user to account page
-      data.success && navigate("/home");
+        alert(data.message);
+
+        // Redirect the user to account page
+        navigate("/home");
+      }
+
       //navigate(`/user/${data.user._id}`);
     } catch (error) {
       alert(error.response.data.message);
@@ -62,12 +77,12 @@ export default function LoginPage() {
                 Password
               </label>
               <div className="text-sm">
-                <a
-                  href="#"
+                <Link
+                  to="/forgot"
                   className="font-semibold text-indigo-600 hover:text-indigo-500"
                 >
                   Forgot password?
-                </a>
+                </Link>
               </div>
             </div>
 
@@ -85,25 +100,23 @@ export default function LoginPage() {
           </div>
 
           <div>
-            <a href="#">
-              <button
-                type="submit"
-                className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-              >
-                Log in
-              </button>
-            </a>
+            <button
+              type="submit"
+              className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+            >
+              Log in
+            </button>
           </div>
         </form>
 
         <p className="mt-10 text-center text-sm text-gray-500">
           Not a member?{" "}
-          <a
-            href="/signup"
+          <Link
+            to="/signup"
             className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
           >
             Join us today!
-          </a>
+          </Link>
         </p>
       </div>
     </div>
