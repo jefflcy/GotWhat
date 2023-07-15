@@ -11,7 +11,7 @@ export default function SideMenu() {
 
   return (
     <div className="px-5">
-      <button onClick={toggleMenu} className="block text-white absolute top-6">
+      <button onClick={toggleMenu} className="block text-white absolute left-6 top-6">
         {isOpen ? <AiOutlineClose size={30} /> : <AiOutlineMenu size={30} />}
       </button>
 

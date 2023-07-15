@@ -1,3 +1,4 @@
+//express app
 const express = require("express");
 const app = express();
 
@@ -21,6 +22,7 @@ mongoose
   .then(() => console.log("MongoDB is  connected successfully"))
   .catch((err) => console.error(err));
 
+//listen for requests
 app.listen(PORT, () => {
   console.log(`Server is listening on port ${PORT}`);
 });
