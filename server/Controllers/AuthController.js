@@ -25,16 +25,10 @@ module.exports.Signup = async (req, res) => {
       password,
     });
 
-    // Create token and send it in a cookie
-    const token = createSecretToken(user._id);
-    res.cookie("token", token, {
-      withCredentials: true,
-      httpOnly: false,
+    res.status(201).json({
+      message: "Signed up successfully\nYou may now login",
+      success: true,
     });
-
-    res
-      .status(201)
-      .json({ message: "Signed up successfully", success: true, user });
   } catch (error) {
     return res
       .status(500)
