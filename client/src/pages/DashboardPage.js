@@ -3,10 +3,11 @@ import AuthContext from '../context/AuthContext';
 import axios from 'axios';
 import SideMenu from '../components/SideMenu';
 
-export default function UserDashboardPage() {
+export default function DashboardPage() {
 
     const { isAuthenticated, user, logout } = useContext(AuthContext);
     const [name, setName] = useState('');
+    const [role, setRole] = useState('');
     const [email, setEmail] = useState('');
     const [currentPassword, setCurrentPassword] = useState('');
     const [newPassword, setNewPassword] = useState('');
@@ -21,11 +22,12 @@ export default function UserDashboardPage() {
 
     const getUserInformation = async () => {
         try {
-            //edit route
-            const response = await axios.get(backendUrl + "/auth/", { withCredentials: true });
+            //check route
+            const response = await axios.get(`${backendUrl}/user`, { withCredentials: true });
 
-            const { name, email } = response.data.user;
+            const { name, role, email } = response.data.user;
             setName(name);
+            setRole(role);
             setEmail(email);
         } catch (error) {
             alert(error.response.data.error);
@@ -44,8 +46,8 @@ export default function UserDashboardPage() {
         }
 
         try {
-            //edit route
-            const response = await axios.put(backendUrl + "/auth/", { currentPassword, newPassword }, { withCredentials: true });
+            //check route
+            const response = await axios.put(`${backendUrl}/user/password`, { currentPassword, newPassword }, { withCredentials: true });
 
             console.log(response.data.message);
             setCurrentPassword('');
@@ -69,6 +71,10 @@ export default function UserDashboardPage() {
 
                 <h2 className='text-2xl font-semibold mb-4'>Welcome, { name }</h2>               
                 { user.avatar && <img src={user.avatar} alt="Avatar" className='rounded-full h-20 w-20 mb-4' /> }
+
+                <div className='mb-4'>
+                    <strong>Role:</strong> { role }
+                </div>
 
                 <div className='mb-4'>
                     <strong>Email:</strong> { email }
@@ -127,7 +133,7 @@ export default function UserDashboardPage() {
         ) : (
             <div>
                 <h2>Please login to access the dashboard</h2>
-                {/* render login form or redirect to login page */}
+                {/* render login form or redirect to login page or can just leave it for user to go to side menu to click on log in */}
             </div>
         )};
     </div>

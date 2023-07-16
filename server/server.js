@@ -13,6 +13,7 @@ const { MONGO_URL, PORT } = process.env;
 const authRoute = require("./Routes/AuthRoute");
 const searchRoute = require("./Routes/SearchRoute");
 const requestRoute = require("./Routes/RequestRoute");
+const dashboardRoute = require("./Routes/DashboardRoute");
 
 mongoose
   .connect(MONGO_URL, {
@@ -42,3 +43,4 @@ app.use(express.json());
 app.use("/api", authRoute);
 app.use("/api", searchRoute);
 app.use("/api", requestRoute);
+app.use("/api", dashboardRoute);

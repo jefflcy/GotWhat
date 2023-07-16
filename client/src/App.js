@@ -8,7 +8,7 @@ import {
   UserAccountPage,
   ChangePasswordPage,
   RequestPage,
-  UserDashboardPage,
+  DashboardPage,
 } from "./pages";
 
 export default function App() {
@@ -24,7 +24,7 @@ export default function App() {
           <Route path="/useraccount" element={<UserAccountPage />} />
           <Route path="/changepassword" element={<ChangePasswordPage />} />
           <Route path="/request" element={<RequestPage />} />
-          <Route path="/userdashboard" element={<UserDashboardPage />} />
+          <Route path="/dashboard" element={<DashboardPage />} />
         </Routes>
       </BrowserRouter>
     </div>
