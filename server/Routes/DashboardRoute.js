@@ -11,9 +11,9 @@ const {
   } = require("../Middlewares/AuthValidator");
 
 //Get Route to retrive user information
-router.get('/', validate, getUser);
+router.get('/user', validate, getUser);
 
 //Post Route to update user password
-router.put('/password', validate, updatePassword);
+router.put('/user/password', validate, updatePassword);
 
 module.exports = router;

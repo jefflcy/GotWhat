@@ -1,18 +1,22 @@
 import React, { useContext, useState, useEffect } from 'react'
-import AuthContext from '../context/AuthContext';
+import { AuthContext } from '../contexts/AuthContext';
 import axios from 'axios';
 import SideMenu from '../components/SideMenu';
+import { Link } from "react-router-dom";
 
 export default function DashboardPage() {
-
-    const { isAuthenticated, user, logout } = useContext(AuthContext);
+    const { token, isAuthenticated, login, logout } = useContext(AuthContext);
+    //const { isAuthenticated, user, logout } = useContext(AuthContext);
     const [name, setName] = useState('');
     const [role, setRole] = useState('');
     const [email, setEmail] = useState('');
+    const [operatingHours, setOperatingHours] = useState('');
+    const [address, setAddress] = useState('');
+    const [contact, setContact] = useState('');
     const [currentPassword, setCurrentPassword] = useState('');
     const [newPassword, setNewPassword] = useState('');
     const [repeatNewPassword, setRepeatNewPassword] = useState('');
-    const backendUrl = process.env.BACKEND_URL;
+    const backendUrl = process.env.REACT_APP_BACKEND_URL;
 
     useEffect(() => {
         if (isAuthenticated) {
@@ -25,12 +29,16 @@ export default function DashboardPage() {
             //check route
             const response = await axios.get(`${backendUrl}/user`, { withCredentials: true });
 
-            const { name, role, email } = response.data.user;
+            const { name, role, email, operatingHours, address, contact } = response.data.user;
             setName(name);
             setRole(role);
             setEmail(email);
+            setOperatingHours(operatingHours);
+            setAddress(address);
+            setContact(contact);
         } catch (error) {
-            alert(error.response.data.error);
+            //alert(error.response.data.error);
+            return;
         }
     };
 
@@ -64,75 +72,98 @@ export default function DashboardPage() {
     }
 
   return (
-    <div className='container mx-auto'>
+    <div className='bg-[#365b6d] h-screen'>
         <SideMenu />
         { isAuthenticated ? (
             <div>
 
-                <h2 className='text-2xl font-semibold mb-4'>Welcome, { name }</h2>               
-                { user.avatar && <img src={user.avatar} alt="Avatar" className='rounded-full h-20 w-20 mb-4' /> }
+                {/* user.avatar && <img src={user.avatar} alt="Avatar" className='rounded-full h-20 w-20 mb-4' /> */}
 
-                <div className='mb-4'>
-                    <strong>Role:</strong> { role }
+                <h2 className='justify-center pt-20 pb-8 lg:px-8 text-center text-4xl font-bold text-white'>Welcome, { name }</h2>               
+
+                <div className='grid grid-cols-2 p-12'>
+                    <div className='font-bold text-white p-6'>
+                        <div className='mb-8 text-2xl'>
+                            <h3>Role:</h3> { role }
+                        </div>
+
+                        <div className='mb-8 text-2xl'>
+                            <h3>Email:</h3> { email }
+                        </div>
+
+                        {role === "business" && 
+                            <div>
+                                <div className='mb-8 text-2xl'>
+                                    <h3>Operating Hours:</h3> { operatingHours }
+                                </div>
+
+                                <div className='mb-8 text-2xl'>
+                                    <h3>Address:</h3> { address }
+                                </div>
+
+                                <div className='mb-8 text-2xl'>
+                                    <h3>Contact:</h3> { contact }
+                                </div>
+                            </div>
+                        }
+
+                        <Link to="/home">
+                            <button onClick={handleLogout} className='bg-red-500 text-white px-4 py-2 rounded'>
+                                Logout
+                            </button>
+                        </Link>
+                    </div>
+
+                    <form onSubmit={ handleUpdatePassword } className='bg-white border rounded shadow p-6'>
+                        <h2 className="text-xl font-bold mb-4 text-center">Update your password</h2>
+                        <div className='mb-4'>
+                            <label htmlFor="currentPassword" className='block mb-2 font-bold'>
+                                Current Password
+                            </label>
+                            <input 
+                                type="password" 
+                                id="currentPassword" 
+                                className='border rounded px-3 py-2 w-full' 
+                                value={currentPassword}
+                                onChange={(input) => setCurrentPassword(input.target.value)}
+                                required 
+                            />
+                        </div>
+                        <div className='mb-4'>
+                            <label htmlFor="newPassword" className='block mb-2 font-bold'>
+                                New Password
+                            </label>
+                            <input 
+                                type="password" 
+                                id="newPassword" 
+                                className='border rounded px-3 py-2 w-full' 
+                                value={newPassword}
+                                onChange={(input) => setNewPassword(input.target.value)}
+                                required 
+                            />                        
+                        </div>
+                        <div className='mb-4'>
+                            <label htmlFor="repeatNewPassword" className='block mb-2 font-bold'>
+                                Repeat New Password
+                            </label>
+                            <input 
+                                type="password" 
+                                id="repeatNewPassword" 
+                                className='border rounded px-3 py-2 w-full' 
+                                value={repeatNewPassword}
+                                onChange={(input) => setRepeatNewPassword(input.target.value)}
+                                required 
+                            />                        
+                        </div>
+                        <button type='submit' className='bg-blue-500 text-white font-bold px-4 py-2 rounded'>
+                            Update Password
+                        </button>
+                    </form>
                 </div>
-
-                <div className='mb-4'>
-                    <strong>Email:</strong> { email }
-                </div>
-
-                <form onSubmit={ handleUpdatePassword }>
-                    <div className='mb-4'>
-                        <label htmlFor="currentPassword" className='block mb-2 font-medium'>
-                            Current Password
-                        </label>
-                        <input 
-                            type="password" 
-                            id="currentPassword" 
-                            className='border rounded px-3 py-2 w-full' 
-                            value={currentPassword}
-                            onChange={(input) => setCurrentPassword(input.target.value)}
-                            required 
-                        />
-                    </div>
-                    <div className='mb-4'>
-                        <label htmlFor="newPassword" className='block mb-2 font-medium'>
-                            New Password
-                        </label>
-                        <input 
-                            type="password" 
-                            id="newPassword" 
-                            className='border rounded px-3 py-2 w-full' 
-                            value={newPassword}
-                            onChange={(input) => setNewPassword(input.target.value)}
-                            required 
-                        />                        
-                    </div>
-                    <div className='mb-4'>
-                        <label htmlFor="repeatNewPassword" className='block mb-2 font-medium'>
-                            Repeat New Password
-                        </label>
-                        <input 
-                            type="password" 
-                            id="repeatNewPassword" 
-                            className='border rounded px-3 py-2 w-full' 
-                            value={repeatNewPassword}
-                            onChange={(input) => setRepeatNewPassword(input.target.value)}
-                            required 
-                        />                        
-                    </div>
-                    <button type='submit' className='bg-blue-500 text-white px-4 py-2 rounded'>
-                        Update Password
-                    </button>
-                </form>
-
-                <button onClick={handleLogout} className='mt-4 bg-red-500 text-white px-4 py-2 rounded'>
-                    Logout
-                </button>
-
             </div>
         ) : (
             <div>
-                <h2>Please login to access the dashboard</h2>
+                <h2 className='flex h-screen items-center justify-center text-4xl font-bold text-white'>Please login to access the dashboard</h2>
                 {/* render login form or redirect to login page or can just leave it for user to go to side menu to click on log in */}
             </div>
         )};

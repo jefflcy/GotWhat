@@ -6,6 +6,7 @@ const bcrypt = require("bcryptjs");
 module.exports.getUser = async (req, res) => {
     try {
         const userId = req.user.id;
+        console.log(userId);
 
         const [user, biz] = await Promise.all([
             User.findById(userId),
@@ -47,7 +48,7 @@ module.exports.updatePassword = async (req, res) => {
 
         const { currentPassword, newPassword } = req.body;
 
-        const target = {};
+        let target = {};
 
         if (user) {
             target = user;
