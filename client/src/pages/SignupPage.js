@@ -1,6 +1,6 @@
 import SideMenu from "../components/SideMenu";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 export default function SignupPage() {
@@ -9,7 +9,7 @@ export default function SignupPage() {
   const [repeatpassword, setRepeatPassword] = useState("");
   const [isChecked, setIsChecked] = useState(false);
   const navigate = useNavigate();
-  const backendUrl = process.env.BACKEND_URL;
+  const backendUrl = process.env.REACT_APP_BACKEND_URL;
 
   /* Toggle between Personal and Business Owner */
   const handleToggle = () => {
@@ -27,7 +27,7 @@ export default function SignupPage() {
         password,
         role: isChecked ? "business" : "user",
       };
-      const { data } = await axios.post(backendUrl + "/auth/signup", newUser);
+      const { data } = await axios.post(`${backendUrl}/signup`, newUser);
 
       // Clear the form fields
       setEmail("");
@@ -35,10 +35,14 @@ export default function SignupPage() {
       setRepeatPassword("");
       setIsChecked(false);
 
-      // Redirect to the login page if signup is successful
-      data.success && navigate("/login");
+      if (data.success) {
+        alert(data.message);
+
+        // Redirect the user to login page
+        navigate("/login");
+      }
     } catch (error) {
-      alert(error.response.data.error);
+      alert(error.response.data.message);
     }
   };
 
@@ -117,9 +121,9 @@ export default function SignupPage() {
           <div>
             <p>
               By creating an account you agree to our{" "}
-              <a href="#" style={{ color: "dodgerblue" }}>
+              <Link to="/terms" style={{ color: "dodgerblue" }}>
                 Terms &amp; Privacy
-              </a>
+              </Link>
               .
             </p>
           </div>
