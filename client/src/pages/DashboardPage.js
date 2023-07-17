@@ -5,8 +5,7 @@ import SideMenu from '../components/SideMenu';
 import { Link } from "react-router-dom";
 
 export default function DashboardPage() {
-    const { token, isAuthenticated, login, logout } = useContext(AuthContext);
-    //const { isAuthenticated, user, logout } = useContext(AuthContext);
+    const { token, isAuthenticated, logout } = useContext(AuthContext);
     const [name, setName] = useState('');
     const [role, setRole] = useState('');
     const [email, setEmail] = useState('');
@@ -20,6 +19,7 @@ export default function DashboardPage() {
 
     useEffect(() => {
         if (isAuthenticated) {
+            //Retrieve User Information
             getUserInformation();
         }
     }, [isAuthenticated]);
@@ -27,9 +27,12 @@ export default function DashboardPage() {
     const getUserInformation = async () => {
         try {
             //check route
-            const response = await axios.get(`${backendUrl}/user`, { withCredentials: true });
+            const response = await axios.get(`${backendUrl}/user`, 
+            {withCredentials: true, 
+                headers: {Authorization: `Bearer ${token}`, } });
 
-            const { name, role, email, operatingHours, address, contact } = response.data.user;
+            const userData = response.data.user;
+            const { name, role, email, operatingHours, address, contact } = userData;
             setName(name);
             setRole(role);
             setEmail(email);
@@ -37,13 +40,12 @@ export default function DashboardPage() {
             setAddress(address);
             setContact(contact);
         } catch (error) {
-            //alert(error.response.data.error);
-            return;
+            alert(error.response.data.error);
         }
     };
 
-    const handleUpdatePassword = async (input) => {
-        input.preventDefault();
+    const handleUpdatePassword = async (event) => {
+        event.preventDefault();
 
         if (currentPassword === newPassword) {
             return alert("New password is the same as the current password!")
@@ -55,7 +57,12 @@ export default function DashboardPage() {
 
         try {
             //check route
-            const response = await axios.put(`${backendUrl}/user/password`, { currentPassword, newPassword }, { withCredentials: true });
+            const response = await axios.patch(`${backendUrl}/user/password`, 
+            { currentPassword, newPassword }, 
+            { withCredentials: true, 
+                headers: {Authorization: `Bearer ${token}`, }});
+
+            console.log(response);
 
             console.log(response.data.message);
             setCurrentPassword('');
@@ -76,19 +83,18 @@ export default function DashboardPage() {
         <SideMenu />
         { isAuthenticated ? (
             <div>
-
-                {/* user.avatar && <img src={user.avatar} alt="Avatar" className='rounded-full h-20 w-20 mb-4' /> */}
-
                 <h2 className='justify-center pt-20 pb-8 lg:px-8 text-center text-4xl font-bold text-white'>Welcome, { name }</h2>               
 
                 <div className='grid grid-cols-2 p-12'>
                     <div className='font-bold text-white p-6'>
                         <div className='mb-8 text-2xl'>
-                            <h3>Role:</h3> { role }
+                            <h3>Role: </h3> { role }
                         </div>
 
-                        <div className='mb-8 text-2xl'>
-                            <h3>Email:</h3> { email }
+                        {/* user.avatar && <img src={user.avatar} alt="Avatar" className='rounded-full h-20 w-20 mb-4' /> */}
+
+                        <div className='flex mb-8 text-2xl'>
+                            <h3>Email: { email }</h3> 
                         </div>
 
                         {role === "business" && 
@@ -125,7 +131,7 @@ export default function DashboardPage() {
                                 id="currentPassword" 
                                 className='border rounded px-3 py-2 w-full' 
                                 value={currentPassword}
-                                onChange={(input) => setCurrentPassword(input.target.value)}
+                                onChange={(event) => setCurrentPassword(event.target.value)}
                                 required 
                             />
                         </div>
@@ -138,7 +144,7 @@ export default function DashboardPage() {
                                 id="newPassword" 
                                 className='border rounded px-3 py-2 w-full' 
                                 value={newPassword}
-                                onChange={(input) => setNewPassword(input.target.value)}
+                                onChange={(event) => setNewPassword(event.target.value)}
                                 required 
                             />                        
                         </div>
@@ -151,7 +157,7 @@ export default function DashboardPage() {
                                 id="repeatNewPassword" 
                                 className='border rounded px-3 py-2 w-full' 
                                 value={repeatNewPassword}
-                                onChange={(input) => setRepeatNewPassword(input.target.value)}
+                                onChange={(event) => setRepeatNewPassword(event.target.value)}
                                 required 
                             />                        
                         </div>
