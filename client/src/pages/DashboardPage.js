@@ -12,6 +12,10 @@ export default function DashboardPage() {
     const [operatingHours, setOperatingHours] = useState('');
     const [address, setAddress] = useState('');
     const [contact, setContact] = useState('');
+    const [menuUrl, setMenuUrl] = useState('');
+    const [selectedMenu, setSelectedMenu] = useState(null);
+    const [bannerUrl, setBannerUrl] = useState('');
+    const [selectedBanner, setSelectedBanner] = useState(null);
     const [currentPassword, setCurrentPassword] = useState('');
     const [newPassword, setNewPassword] = useState('');
     const [repeatNewPassword, setRepeatNewPassword] = useState('');
@@ -32,13 +36,15 @@ export default function DashboardPage() {
                 headers: {Authorization: `Bearer ${token}`, } });
 
             const userData = response.data.user;
-            const { name, role, email, operatingHours, address, contact } = userData;
+            const { name, role, email, operatingHours, address, contact, menuUrl, bannerUrl } = userData;
             setName(name);
             setRole(role);
             setEmail(email);
             setOperatingHours(operatingHours);
             setAddress(address);
             setContact(contact);
+            setMenuUrl(menuUrl);
+            setBannerUrl(bannerUrl);
         } catch (error) {
             alert(error.response.data.error);
         }
@@ -73,13 +79,65 @@ export default function DashboardPage() {
         }
     };
 
+    const handleMenuChange = (e) => {
+        setSelectedMenu(e.target.files[0]);
+    };
+
+    const handleMenuUpload = async () => {
+        const formData = new FormData();
+        formData.append('file', selectedMenu);
+
+        try {
+            const uploadResponse = await axios.patch(`${backendUrl}/user/upload`, 
+                formData, 
+                { withCredentials: true, 
+                    headers: {Authorization: `Bearer ${token}`, }});
+            alert('Menu uploaded successfully');
+
+            const uploadedFileUrl = uploadResponse.data.fileUrl;
+            setMenuUrl(uploadedFileUrl);
+            const updateResponse = await axios.patch(`${backendUrl}/user/upload`,
+                { newMenuUrl: uploadedFileUrl });
+
+            console.log(updateResponse.data);
+        } catch (error) {
+            alert(error.response.data.error);
+        }
+    };
+
+    const handleBannerChange = (e) => {
+        setSelectedBanner(e.target.files[0]);
+    };
+
+    const handleBannerUpload = async () => {
+        const formData = new FormData();
+        formData.append('file', selectedBanner);
+
+        try {
+            const uploadResponse = await axios.patch(`${backendUrl}/user/upload`, 
+                formData, 
+                { withCredentials: true, 
+                    headers: {Authorization: `Bearer ${token}`, }});
+            alert('Banner uploaded successfully');
+
+            const uploadedFileUrl = uploadResponse.data.fileUrl;
+            setBannerUrl(uploadedFileUrl);
+            const updateResponse = await axios.patch(`${backendUrl}/user/upload`,
+                { newBannerUrl: uploadedFileUrl });
+
+            console.log(updateResponse.data);
+        } catch (error) {
+            alert(error.response.data.error);
+        }
+    };
+
     //check what other logic is needed
     const handleLogout = () => {
         logout();
-    }
+    };
 
   return (
-    <div className='bg-[#365b6d] h-screen'>
+    <div className='bg-[#365b6d] min-h-screen'>
         <SideMenu />
         { isAuthenticated ? (
             <div>
@@ -88,7 +146,7 @@ export default function DashboardPage() {
                 <div className='grid grid-cols-2 p-12'>
                     <div className='font-bold text-white p-6'>
                         <div className='mb-8 text-2xl'>
-                            <h3>Role: </h3> { role }
+                            <h3>Role: { role }</h3> 
                         </div>
 
                         {/* user.avatar && <img src={user.avatar} alt="Avatar" className='rounded-full h-20 w-20 mb-4' /> */}
@@ -97,7 +155,7 @@ export default function DashboardPage() {
                             <h3>Email: { email }</h3> 
                         </div>
 
-                        {role === "business" && 
+                        {role === "Business Owner" && 
                             <div>
                                 <div className='mb-8 text-2xl'>
                                     <h3>Operating Hours:</h3> { operatingHours }
@@ -166,6 +224,40 @@ export default function DashboardPage() {
                         </button>
                     </form>
                 </div>
+
+                {role === "Business Owner" &&
+                    <div>
+                        <div>
+                            <div className=' text-white p-6 text-center'>
+                                <h2 className='font-bold text-xl mb-4'>Update Your Menu</h2>
+                                <input type="file" onChange={handleMenuChange} />
+                                <button onClick={handleMenuUpload} className='bg-blue-500 text-white font-bold px-4 py-2 rounded'>Upload</button>
+                            </div>
+
+                            {menuUrl && 
+                                <div>
+                                    <h3>Uploaded Menu:</h3>
+                                    <iframe src={menuUrl} className='w-full h-full' title='PDF Viewer' />
+                                </div>
+                            }
+                        </div>
+
+                        <div>
+                            <div className=' text-white p-6 text-center'>
+                                <h2 className='font-bold text-xl mb-4'>Update Your Banner</h2>
+                                <input type="file" onChange={handleBannerChange} />
+                                <button onClick={handleBannerUpload} className='bg-blue-500 text-white font-bold px-4 py-2 rounded'>Upload</button>
+                            </div>
+
+                            {bannerUrl && 
+                                <div>
+                                    <h3>Uploaded Banner:</h3>
+                                    <img src={bannerUrl} alt='Uploaded Banner' className='w-full h-full' />
+                                </div>
+                            }
+                        </div>
+                    </div>
+                }
             </div>
         ) : (
             <div>
