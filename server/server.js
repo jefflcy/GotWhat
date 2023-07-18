@@ -4,6 +4,8 @@ const app = express();
 
 const mongoose = require("mongoose");
 
+const cloudinary = require('cloudinary').v2;
+
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
 
@@ -23,6 +25,12 @@ mongoose
   .then(() => console.log("MongoDB is  connected successfully"))
   .catch((err) => console.error(err));
 
+  cloudinary.config({ 
+    cloud_name: 'dwintzgkt', 
+    api_key: '169251852518734', 
+    api_secret: 'ygg3aWtpVtw5nMdgJTvS8_JEcis' 
+  });
+  
 //listen for requests
 app.listen(PORT, () => {
   console.log(`Server is listening on port ${PORT}`);
