@@ -10,7 +10,7 @@ const cors = require("cors");
 const cookieParser = require("cookie-parser");
 
 require("dotenv").config();
-const { MONGO_URL, PORT } = process.env;
+const { MONGO_URL, PORT, CLOUD_NAME, API_KEY, API_SECRET } = process.env;
 
 const authRoute = require("./Routes/AuthRoute");
 const searchRoute = require("./Routes/SearchRoute");
@@ -24,13 +24,13 @@ mongoose
   })
   .then(() => console.log("MongoDB is  connected successfully"))
   .catch((err) => console.error(err));
-
-  cloudinary.config({ 
-    cloud_name: 'dwintzgkt', 
-    api_key: '169251852518734', 
-    api_secret: 'ygg3aWtpVtw5nMdgJTvS8_JEcis' 
-  });
   
+  cloudinary.config({ 
+    cloud_name: CLOUD_NAME, 
+    api_key: API_KEY, 
+    api_secret: API_SECRET 
+  });
+
 //listen for requests
 app.listen(PORT, () => {
   console.log(`Server is listening on port ${PORT}`);
