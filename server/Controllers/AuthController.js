@@ -5,7 +5,7 @@ const bcrypt = require("bcryptjs");
 
 module.exports.Signup = async (req, res) => {
   try {
-    const { email, password, role } = req.body;
+    const { name, email, password, role } = req.body;
     let model;
     role === "user" ? (model = User) : (model = BizOwner);
 
@@ -21,6 +21,7 @@ module.exports.Signup = async (req, res) => {
 
     // Create the new user/biz in UserModel/BizOwnerModel
     const user = await model.create({
+      name,
       email,
       password,
     });
