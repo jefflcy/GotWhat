@@ -7,7 +7,7 @@ module.exports.Signup = async (req, res) => {
   try {
     const { name, email, password, role } = req.body;
     let model;
-    role === "user" ? (model = User) : (model = BizOwner);
+    role === "User" ? (model = User) : (model = BizOwner);
 
     // Check if user/biz exists
     const [existingUser, existingBiz] = await Promise.all([
@@ -24,6 +24,7 @@ module.exports.Signup = async (req, res) => {
       name,
       email,
       password,
+      role,
     });
 
     res.status(201).json({
