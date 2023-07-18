@@ -27,7 +27,7 @@ export default function SignupPage() {
         name,
         email,
         password,
-        role: isChecked ? "business" : "user",
+        role: isChecked ? "Business Owner" : "User",
       };
       const { data } = await axios.post(`${backendUrl}/signup`, newUser);
 

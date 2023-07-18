@@ -31,14 +31,20 @@ const bizSchema = new mongoose.Schema({
   contact: {
     type: String,
   },
-  menu: {
+  menuUrl: {
+    type: String,
+  },
+  bannerUrl: {
+    type: String,
+  },
+  /*menu: {
     type: Buffer,
     contentType: String,
   },
   banner: {
     type: Buffer,
     contentType: String,
-  },
+  },*/
   role: {
     type: String,
   },
