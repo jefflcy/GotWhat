@@ -13,15 +13,15 @@ router.get('/user', validate, getUser);
 router.patch('/user/password', validate, updatePassword);
 
 //Patch Route to update/create PDF menu
-router.patch('/user/upload', validate, updateMenu);
+router.patch('/user/uploadmenu', validate, updateMenu);
 
 //Patch Route to update user menu Url
 router.patch('/user/menu', validate, updateMenuUrl);
 
 //Patch Route to update/create Img banner
-router.patch('/user/upload', validate, updateBanner);
+router.patch('/user/uploadbanner', validate, updateBanner);
 
 //Patch Route to update user banner Url
-router.patch('/user/menu', validate, updateBannerUrl);
+router.patch('/user/banner', validate, updateBannerUrl);
 
 module.exports = router;

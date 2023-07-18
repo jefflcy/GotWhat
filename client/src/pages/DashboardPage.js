@@ -88,7 +88,7 @@ export default function DashboardPage() {
         formData.append('file', selectedMenu);
 
         try {
-            const uploadResponse = await axios.patch(`${backendUrl}/user/upload`, 
+            const uploadResponse = await axios.patch(`${backendUrl}/user/uploadmenu`, 
                 formData, 
                 { withCredentials: true, 
                     headers: {Authorization: `Bearer ${token}`, }});
@@ -96,7 +96,7 @@ export default function DashboardPage() {
 
             const uploadedFileUrl = uploadResponse.data.fileUrl;
             setMenuUrl(uploadedFileUrl);
-            const updateResponse = await axios.patch(`${backendUrl}/user/upload`,
+            const updateResponse = await axios.patch(`${backendUrl}/user/menu`,
                 { newMenuUrl: uploadedFileUrl });
 
             console.log(updateResponse.data);
@@ -114,7 +114,7 @@ export default function DashboardPage() {
         formData.append('file', selectedBanner);
 
         try {
-            const uploadResponse = await axios.patch(`${backendUrl}/user/upload`, 
+            const uploadResponse = await axios.patch(`${backendUrl}/user/uploadbanner`, 
                 formData, 
                 { withCredentials: true, 
                     headers: {Authorization: `Bearer ${token}`, }});
@@ -122,7 +122,7 @@ export default function DashboardPage() {
 
             const uploadedFileUrl = uploadResponse.data.fileUrl;
             setBannerUrl(uploadedFileUrl);
-            const updateResponse = await axios.patch(`${backendUrl}/user/upload`,
+            const updateResponse = await axios.patch(`${backendUrl}/user/banner`,
                 { newBannerUrl: uploadedFileUrl });
 
             console.log(updateResponse.data);
