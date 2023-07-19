@@ -15,8 +15,10 @@ export default function DashboardPage() {
     const [contact, setContact] = useState('');
     const [menuUrl, setMenuUrl] = useState('');
     const [selectedMenu, setSelectedMenu] = useState(null);
-    //const [bannerUrl, setBannerUrl] = useState('');
-    //const [selectedBanner, setSelectedBanner] = useState(null);
+    const [avatarUrl, setAvatarUrl] = useState('');
+    const [selectedAvatar, setSelectedAvatar] = useState(null);
+    const [bannerUrl, setBannerUrl] = useState('');
+    const [selectedBanner, setSelectedBanner] = useState(null);
     const [currentPassword, setCurrentPassword] = useState('');
     const [newPassword, setNewPassword] = useState('');
     const [repeatNewPassword, setRepeatNewPassword] = useState('');
@@ -38,7 +40,7 @@ export default function DashboardPage() {
 
             const userData = response.data.user;
             //setCurrUser(userData);
-            const { name, role, email, operatingHours, address, contact, menuUrl, bannerUrl } = userData;
+            const { name, role, email, operatingHours, address, contact, menuUrl, avatarUrl, bannerUrl } = userData;
             setName(name);
             setRole(role);
             setEmail(email);
@@ -46,7 +48,8 @@ export default function DashboardPage() {
             setAddress(address);
             setContact(contact);
             setMenuUrl(menuUrl);
-            //setBannerUrl(bannerUrl);
+            setAvatarUrl(avatarUrl);
+            setBannerUrl(bannerUrl);
         } catch (error) {
             alert(error.response.data.error);
         }
@@ -151,7 +154,38 @@ export default function DashboardPage() {
         }
     };
 
-    /*const handleBannerChange = (e) => {
+    const handleAvatarChange = (e) => {
+        //console.log(e.target.files[0]);
+        setSelectedAvatar(e.target.files[0]);
+    };
+
+    const handleAvatarUpload = async () => {
+        ///console.log(selectedMenu)
+        const formData = new FormData();
+        formData.append('file', selectedAvatar);
+        //formData.append('user', currUser);
+        //for (const [key,value] of formData.entries()){
+        //console.log(key, value)};
+
+        try {
+            const uploadResponse = await axios.post(`${backendUrl}/user/uploadavatar`, 
+                formData, 
+                { withCredentials: true, 
+                    headers: {Authorization: `Bearer ${token}`,'Content-Type': 'multipart/form-data',}});
+            alert('Avatar uploaded successfully');
+            console.log(uploadResponse.data.message);
+            //const uploadedFileUrl = uploadResponse.data.fileUrl;
+            //setMenuUrl(uploadedFileUrl);
+            //const updateResponse = await axios.patch(`${backendUrl}/user/menu`,
+                //{ newMenuUrl: uploadedFileUrl });
+
+            //console.log(updateResponse.data);
+        } catch (error) {
+            alert(error.response.data.error);
+        }
+    };
+
+    const handleBannerChange = (e) => {
         setSelectedBanner(e.target.files[0]);
     };
 
@@ -175,7 +209,7 @@ export default function DashboardPage() {
         } catch (error) {
             alert(error.response.data.error);
         }
-    };*/
+    };
 
     //check what other logic is needed
     const handleLogout = () => {
@@ -187,15 +221,23 @@ export default function DashboardPage() {
         <SideMenu />
         { isAuthenticated ? (
             <div>
-                <h2 className='justify-center pt-20 pb-8 lg:px-8 text-center text-4xl font-bold text-white'>Welcome, { name }</h2>               
+                { avatarUrl ?
+                 <img src={avatarUrl} alt="Avatar" className='rounded-full h-20 w-20 mb-4' /> 
+                :
+                <div className=' text-white p-6 text-center'>
+                    <h2 className='font-bold text-xl mb-4'>Update Your Avatar</h2>
+                    <input type="file" onChange={handleAvatarChange} />
+                    <button onClick={handleAvatarUpload} className='bg-blue-500 text-white font-bold px-4 py-2 rounded'>Upload</button>
+                </div>
+                }
+
+                <h2 className='justify-center pt-8 pb-8 lg:px-8 text-center text-4xl font-bold text-white'>Welcome, { name }</h2>               
 
                 <div className='grid grid-cols-2 p-12'>
                     <div className='font-bold text-white p-6'>
                         <div className='mb-8 text-2xl'>
                             <h3>Role: { role }</h3> 
                         </div>
-
-                        {/* user.avatar && <img src={user.avatar} alt="Avatar" className='rounded-full h-20 w-20 mb-4' /> */}
 
                         <div className='flex mb-8 text-2xl'>
                             <h3>Email: { email }</h3> 
@@ -327,7 +369,7 @@ export default function DashboardPage() {
                             }
                         </div>
 
-                        {/*<div>
+                        <div>
                             <div className=' text-white p-6 text-center'>
                                 <h2 className='font-bold text-xl mb-4'>Update Your Banner</h2>
                                 <input type="file" onChange={handleBannerChange} />
@@ -340,7 +382,7 @@ export default function DashboardPage() {
                                     <img src={bannerUrl} alt='Uploaded Banner' className='w-full h-full' />
                                 </div>
                             }
-                        </div>*/}
+                        </div>
                     </div>
                 }
             </div>
