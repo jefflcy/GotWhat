@@ -7,6 +7,7 @@ export default function SignupPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [repeatpassword, setRepeatPassword] = useState("");
+  const [name, setName] = useState("");
   const [isChecked, setIsChecked] = useState(false);
   const navigate = useNavigate();
   const backendUrl = process.env.REACT_APP_BACKEND_URL;
@@ -23,13 +24,15 @@ export default function SignupPage() {
 
     try {
       const newUser = {
+        name,
         email,
         password,
-        role: isChecked ? "business" : "user",
+        role: isChecked ? "Business Owner" : "User",
       };
       const { data } = await axios.post(`${backendUrl}/signup`, newUser);
 
       // Clear the form fields
+      setName("");
       setEmail("");
       setPassword("");
       setRepeatPassword("");
@@ -49,12 +52,14 @@ export default function SignupPage() {
   return (
     <div className="bg-[#365b6d] h-screen">
       <SideMenu />
-      <div className="justify-center pt-24 pb-8 lg:px-8 text-center font-bold text-white">
+
+      <div className="justify-center pt-12 pb-8 lg:px-8 text-center font-bold text-white">
         <h2 className="text-3xl leading-9 tracking-tight">Sign Up</h2>
         <p className="text-md">
           Please fill in this form to create an account.
         </p>
       </div>
+      
       <div className="flex justify-center">
         <label className="toggle-switch flex items-center cursor-pointer">
           <input
@@ -74,8 +79,24 @@ export default function SignupPage() {
           </span>
         </label>
       </div>
+
       <div className="mt-5 mx-auto w-full sm:max-w-sm shadow-xl bg-white rounded-lg p-4">
         <form onSubmit={handleSubmit} className="space-y-6">
+          <div>
+            <label className="block text-large font-bold leading-6 text-gray-900">
+              Name
+            </label>
+            <input
+              type="text"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              placeholder="jefflee"
+              autoComplete="name"
+              required
+              className="mt-4 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+            />
+          </div>
+
           <div>
             <label className="block text-large font-bold leading-6 text-gray-900">
               Email address

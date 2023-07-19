@@ -9,6 +9,7 @@ import {
   UserAccountPage,
   ChangePasswordPage,
   RequestPage,
+  DashboardPage,
 } from "./pages";
 
 export default function App() {
@@ -25,6 +26,7 @@ export default function App() {
             <Route path="/useraccount" element={<UserAccountPage />} />
             <Route path="/changepassword" element={<ChangePasswordPage />} />
             <Route path="/request" element={<RequestPage />} />
+            <Route path="/dashboard" element={<DashboardPage />} />
           </Routes>
         </BrowserRouter>
       </AuthProvider>
