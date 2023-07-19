@@ -39,15 +39,30 @@ module.exports.updatePassword = async (req, res) => {
     }
 };
 
-module.exports.updateMenu = async (req, res) => {
+module.exports.uploadMenu = async (req, res) => {
     try {
-        const { path } = req.files.file;
 
-        const result = await cloudinary.uploader.upload(path);
+        if (!req.file) {
+            return res
+                    .status(400)
+                    .json({ message: 'No file uploaded' });
+       }
+
+        //const menuFile = req.get('file');
+        //const user = req.get('user');
+        const { file } = req.files;
+        //const { path } = req.files.file;
+
+        const result = await cloudinary.uploader.upload(req.file.path, {
+            folder: 'pdf_files', //specify folder in Cloudinary to upload to, can change if you want
+            resource_type: 'auto', //auto determine the type of upload
+        });
 
         const fileUrl = result.secure_url;
-
+    
         //save fileUrl to database
+        //user.menuUrl = fileUrl;
+        //await user.save();
 
         res.json({ fileUrl });
     } catch (error) {
@@ -69,7 +84,7 @@ module.exports.updateMenuUrl = async (req, res) => {
     }
 }
 
-module.exports.updateBanner = async (req, res) => {
+/*module.exports.updateBanner = async (req, res) => {
     try {
         const { path } = req.files.file;
 
@@ -97,4 +112,4 @@ module.exports.updateBannerUrl = async (req, res) => {
     } catch (error) {
         return res.status(500).json({ message: 'Internal server error' });
     }
-}
+}*/
