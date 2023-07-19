@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 
 export default function DashboardPage() {
     const { token, isAuthenticated, logout } = useContext(AuthContext);
+    //const [currUser, setCurrUser] = useState(null);
     const [name, setName] = useState('');
     const [role, setRole] = useState('');
     const [email, setEmail] = useState('');
@@ -14,8 +15,8 @@ export default function DashboardPage() {
     const [contact, setContact] = useState('');
     const [menuUrl, setMenuUrl] = useState('');
     const [selectedMenu, setSelectedMenu] = useState(null);
-    const [bannerUrl, setBannerUrl] = useState('');
-    const [selectedBanner, setSelectedBanner] = useState(null);
+    //const [bannerUrl, setBannerUrl] = useState('');
+    //const [selectedBanner, setSelectedBanner] = useState(null);
     const [currentPassword, setCurrentPassword] = useState('');
     const [newPassword, setNewPassword] = useState('');
     const [repeatNewPassword, setRepeatNewPassword] = useState('');
@@ -36,6 +37,7 @@ export default function DashboardPage() {
                 headers: {Authorization: `Bearer ${token}`, } });
 
             const userData = response.data.user;
+            //setCurrUser(userData);
             const { name, role, email, operatingHours, address, contact, menuUrl, bannerUrl } = userData;
             setName(name);
             setRole(role);
@@ -44,7 +46,7 @@ export default function DashboardPage() {
             setAddress(address);
             setContact(contact);
             setMenuUrl(menuUrl);
-            setBannerUrl(bannerUrl);
+            //setBannerUrl(bannerUrl);
         } catch (error) {
             alert(error.response.data.error);
         }
@@ -68,7 +70,7 @@ export default function DashboardPage() {
             { withCredentials: true, 
                 headers: {Authorization: `Bearer ${token}`, }});
 
-            console.log(response);
+            //console.log(response);
 
             console.log(response.data.message);
             setCurrentPassword('');
@@ -80,32 +82,37 @@ export default function DashboardPage() {
     };
 
     const handleMenuChange = (e) => {
+        //console.log(e.target.files[0]);
         setSelectedMenu(e.target.files[0]);
     };
 
     const handleMenuUpload = async () => {
+        ///console.log(selectedMenu)
         const formData = new FormData();
-        formData.append('file', selectedMenu);
+        formData.append('pdfFile', selectedMenu);
+        //formData.append('user', currUser);
+        //for (const [key,value] of formData.entries()){
+        //console.log(key, value)};
 
         try {
-            const uploadResponse = await axios.patch(`${backendUrl}/user/uploadmenu`, 
+            const uploadResponse = await axios.post(`${backendUrl}/user/uploadmenu`, 
                 formData, 
                 { withCredentials: true, 
-                    headers: {Authorization: `Bearer ${token}`, }});
+                    headers: {Authorization: `Bearer ${token}`,'Content-Type': 'multipart/form-data',}});
             alert('Menu uploaded successfully');
+            console.log(uploadResponse.data.message);
+            //const uploadedFileUrl = uploadResponse.data.fileUrl;
+            //setMenuUrl(uploadedFileUrl);
+            //const updateResponse = await axios.patch(`${backendUrl}/user/menu`,
+                //{ newMenuUrl: uploadedFileUrl });
 
-            const uploadedFileUrl = uploadResponse.data.fileUrl;
-            setMenuUrl(uploadedFileUrl);
-            const updateResponse = await axios.patch(`${backendUrl}/user/menu`,
-                { newMenuUrl: uploadedFileUrl });
-
-            console.log(updateResponse.data);
+            //console.log(updateResponse.data);
         } catch (error) {
             alert(error.response.data.error);
         }
     };
 
-    const handleBannerChange = (e) => {
+    /*const handleBannerChange = (e) => {
         setSelectedBanner(e.target.files[0]);
     };
 
@@ -129,7 +136,7 @@ export default function DashboardPage() {
         } catch (error) {
             alert(error.response.data.error);
         }
-    };
+    };*/
 
     //check what other logic is needed
     const handleLogout = () => {
@@ -242,7 +249,7 @@ export default function DashboardPage() {
                             }
                         </div>
 
-                        <div>
+                        {/*<div>
                             <div className=' text-white p-6 text-center'>
                                 <h2 className='font-bold text-xl mb-4'>Update Your Banner</h2>
                                 <input type="file" onChange={handleBannerChange} />
@@ -255,7 +262,7 @@ export default function DashboardPage() {
                                     <img src={bannerUrl} alt='Uploaded Banner' className='w-full h-full' />
                                 </div>
                             }
-                        </div>
+                        </div>*/}
                     </div>
                 }
             </div>
