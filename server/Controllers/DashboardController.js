@@ -39,6 +39,49 @@ module.exports.updatePassword = async (req, res) => {
     }
 };
 
+module.exports.updateOH = async (req, res) => {
+    try {
+        const { user } = req;
+        const { operatingHours } = req.body;
+        //console.log(req.body);
+
+        user.operatingHours = operatingHours;
+        await user.save();
+
+        res.json({ message: 'Operating Hours updated successfully' });
+    } catch (error) {
+        return res.status(500).json({ message: 'Internal server error' });
+    }
+};
+
+module.exports.updateAddress = async (req, res) => {
+    try {
+        const { user } = req;
+        const { address } = req.body;
+
+        user.address = address;
+        await user.save();
+
+        res.json({ message: 'Address updated successfully' });
+    } catch (error) {
+        return res.status(500).json({ message: 'Internal server error' });
+    }
+};
+
+module.exports.updateContact = async (req, res) => {
+    try {
+        const { user } = req;
+        const { contact } = req.body;
+
+        user.contact = contact;
+        await user.save();
+
+        res.json({ message: 'Contact updated successfully' });
+    } catch (error) {
+        return res.status(500).json({ message: 'Internal server error' });
+    }
+};
+
 module.exports.uploadMenu = async (req, res) => {
     try {
 

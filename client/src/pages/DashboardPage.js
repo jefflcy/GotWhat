@@ -81,6 +81,45 @@ export default function DashboardPage() {
         }
     };
 
+    const handleUpdateOH = async(event) => {
+        try {
+            const response = await axios.patch(`${backendUrl}/user/OH`,
+            { operatingHours }, 
+            { withCredentials: true, 
+                headers: {Authorization: `Bearer ${token}`, }});
+
+            console.log(response.data.message);
+        } catch (error) {
+            alert(error.response.data.error);
+        }
+    };
+
+    const handleUpdateAddress = async(event) => {
+        try {
+            const response = await axios.patch(`${backendUrl}/user/address`,
+            { address }, 
+            { withCredentials: true, 
+                headers: {Authorization: `Bearer ${token}`, }});
+
+            console.log(response.data.message);
+        } catch (error) {
+            alert(error.response.data.error);
+        }
+    };
+
+    const handleUpdateContact = async(event) => {
+        try {
+            const response = await axios.patch(`${backendUrl}/user/contact`,
+            { contact }, 
+            { withCredentials: true, 
+                headers: {Authorization: `Bearer ${token}`, }});
+
+            console.log(response.data.message);
+        } catch (error) {
+            alert(error.response.data.error);
+        }
+    };
+
     const handleMenuChange = (e) => {
         //console.log(e.target.files[0]);
         setSelectedMenu(e.target.files[0]);
@@ -164,16 +203,55 @@ export default function DashboardPage() {
 
                         {role === "Business Owner" && 
                             <div>
-                                <div className='mb-8 text-2xl'>
-                                    <h3>Operating Hours:</h3> { operatingHours }
+                                <div className='mb-8 flex'>
+                                    <h3 className='text-2xl'>Operating Hours:</h3> 
+                                    <form onSubmit={ handleUpdateOH } className='flex w-full'>
+                                        <input 
+                                            type="text" 
+                                            id="operatingHours" 
+                                            className='border rounded px-3 py-2 w-full text-gray-600' 
+                                            value={ operatingHours }
+                                            onChange={(event) => setOperatingHours(event.target.value)}
+                                            placeholder={ operatingHours }
+                                        />
+                                        <button type='submit' className='bg-blue-500 text-white font-bold px-4 py-2 rounded'>
+                                        Update
+                                        </button>
+                                    </form>
                                 </div>
 
-                                <div className='mb-8 text-2xl'>
-                                    <h3>Address:</h3> { address }
+                                <div className='mb-8 flex'>
+                                    <h3 className='text-2xl mr-12'>Address:</h3> 
+                                    <form onSubmit={ handleUpdateAddress } className='flex w-full'>
+                                        <input 
+                                            type="text" 
+                                            id="address" 
+                                            className='border rounded px-3 py-2 w-full text-gray-600' 
+                                            value={ address }
+                                            onChange={(event) => setAddress(event.target.value)}
+                                            placeholder={ address }
+                                        />
+                                        <button type='submit' className='bg-blue-500 text-white font-bold px-4 py-2 rounded'>
+                                        Update
+                                        </button>
+                                    </form>
                                 </div>
 
-                                <div className='mb-8 text-2xl'>
-                                    <h3>Contact:</h3> { contact }
+                                <div className='mb-8 flex'>
+                                    <h3 className='text-2xl mr-12'>Contact:</h3> 
+                                    <form onSubmit={ handleUpdateContact } className='flex w-full'>
+                                        <input 
+                                            type="tel" 
+                                            id="contact" 
+                                            className='border rounded px-3 py-2 w-full text-gray-600' 
+                                            value={ contact }
+                                            onChange={(event) => setContact(event.target.value)}
+                                            placeholder={ contact }
+                                        />
+                                        <button type='submit' className='bg-blue-500 text-white font-bold px-4 py-2 rounded'>
+                                        Update
+                                        </button>
+                                    </form>
                                 </div>
                             </div>
                         }
