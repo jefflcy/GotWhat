@@ -39,15 +39,73 @@ module.exports.updatePassword = async (req, res) => {
     }
 };
 
-module.exports.updateMenu = async (req, res) => {
+module.exports.updateOH = async (req, res) => {
     try {
-        const { path } = req.files.file;
+        const { user } = req;
+        const { operatingHours } = req.body;
+        //console.log(req.body);
 
-        const result = await cloudinary.uploader.upload(path);
+        user.operatingHours = operatingHours;
+        await user.save();
+
+        res.json({ message: 'Operating Hours updated successfully' });
+    } catch (error) {
+        return res.status(500).json({ message: 'Internal server error' });
+    }
+};
+
+module.exports.updateAddress = async (req, res) => {
+    try {
+        const { user } = req;
+        const { address } = req.body;
+
+        user.address = address;
+        await user.save();
+
+        res.json({ message: 'Address updated successfully' });
+    } catch (error) {
+        return res.status(500).json({ message: 'Internal server error' });
+    }
+};
+
+module.exports.updateContact = async (req, res) => {
+    try {
+        const { user } = req;
+        const { contact } = req.body;
+
+        user.contact = contact;
+        await user.save();
+
+        res.json({ message: 'Contact updated successfully' });
+    } catch (error) {
+        return res.status(500).json({ message: 'Internal server error' });
+    }
+};
+
+module.exports.uploadMenu = async (req, res) => {
+    try {
+
+        if (!req.file) {
+            return res
+                    .status(400)
+                    .json({ message: 'No file uploaded' });
+       }
+
+        //const menuFile = req.get('file');
+        //const user = req.get('user');
+        const { file } = req.files;
+        //const { path } = req.files.file;
+
+        const result = await cloudinary.uploader.upload(req.file.path, {
+            folder: 'pdf_files', //specify folder in Cloudinary to upload to, can change if you want
+            resource_type: 'auto', //auto determine the type of upload
+        });
 
         const fileUrl = result.secure_url;
-
+    
         //save fileUrl to database
+        //user.menuUrl = fileUrl;
+        //await user.save();
 
         res.json({ fileUrl });
     } catch (error) {
@@ -69,7 +127,7 @@ module.exports.updateMenuUrl = async (req, res) => {
     }
 }
 
-module.exports.updateBanner = async (req, res) => {
+/*module.exports.updateBanner = async (req, res) => {
     try {
         const { path } = req.files.file;
 
@@ -97,4 +155,4 @@ module.exports.updateBannerUrl = async (req, res) => {
     } catch (error) {
         return res.status(500).json({ message: 'Internal server error' });
     }
-}
+}*/

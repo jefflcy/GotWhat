@@ -31,6 +31,6 @@ exports.validate = async (req, res, next) => {
     const target = user || biz;
 
     req.user = target;
-
+    //console.log(req);
     next();
 };

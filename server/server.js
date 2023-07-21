@@ -24,8 +24,8 @@ mongoose
   })
   .then(() => console.log("MongoDB is  connected successfully"))
   .catch((err) => console.error(err));
-  
-  cloudinary.config({ 
+
+cloudinary.config({ 
     cloud_name: CLOUD_NAME, 
     api_key: API_KEY, 
     api_secret: API_SECRET 

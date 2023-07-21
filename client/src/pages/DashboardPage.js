@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 
 export default function DashboardPage() {
     const { token, isAuthenticated, logout } = useContext(AuthContext);
+    //const [currUser, setCurrUser] = useState(null);
     const [name, setName] = useState('');
     const [role, setRole] = useState('');
     const [email, setEmail] = useState('');
@@ -14,6 +15,8 @@ export default function DashboardPage() {
     const [contact, setContact] = useState('');
     const [menuUrl, setMenuUrl] = useState('');
     const [selectedMenu, setSelectedMenu] = useState(null);
+    const [avatarUrl, setAvatarUrl] = useState('');
+    const [selectedAvatar, setSelectedAvatar] = useState(null);
     const [bannerUrl, setBannerUrl] = useState('');
     const [selectedBanner, setSelectedBanner] = useState(null);
     const [currentPassword, setCurrentPassword] = useState('');
@@ -36,7 +39,8 @@ export default function DashboardPage() {
                 headers: {Authorization: `Bearer ${token}`, } });
 
             const userData = response.data.user;
-            const { name, role, email, operatingHours, address, contact, menuUrl, bannerUrl } = userData;
+            //setCurrUser(userData);
+            const { name, role, email, operatingHours, address, contact, menuUrl, avatarUrl, bannerUrl } = userData;
             setName(name);
             setRole(role);
             setEmail(email);
@@ -44,6 +48,7 @@ export default function DashboardPage() {
             setAddress(address);
             setContact(contact);
             setMenuUrl(menuUrl);
+            setAvatarUrl(avatarUrl);
             setBannerUrl(bannerUrl);
         } catch (error) {
             alert(error.response.data.error);
@@ -68,7 +73,7 @@ export default function DashboardPage() {
             { withCredentials: true, 
                 headers: {Authorization: `Bearer ${token}`, }});
 
-            console.log(response);
+            //console.log(response);
 
             console.log(response.data.message);
             setCurrentPassword('');
@@ -79,27 +84,102 @@ export default function DashboardPage() {
         }
     };
 
+    const handleUpdateOH = async(event) => {
+        try {
+            const response = await axios.patch(`${backendUrl}/user/OH`,
+            { operatingHours }, 
+            { withCredentials: true, 
+                headers: {Authorization: `Bearer ${token}`, }});
+
+            console.log(response.data.message);
+        } catch (error) {
+            alert(error.response.data.error);
+        }
+    };
+
+    const handleUpdateAddress = async(event) => {
+        try {
+            const response = await axios.patch(`${backendUrl}/user/address`,
+            { address }, 
+            { withCredentials: true, 
+                headers: {Authorization: `Bearer ${token}`, }});
+
+            console.log(response.data.message);
+        } catch (error) {
+            alert(error.response.data.error);
+        }
+    };
+
+    const handleUpdateContact = async(event) => {
+        try {
+            const response = await axios.patch(`${backendUrl}/user/contact`,
+            { contact }, 
+            { withCredentials: true, 
+                headers: {Authorization: `Bearer ${token}`, }});
+
+            console.log(response.data.message);
+        } catch (error) {
+            alert(error.response.data.error);
+        }
+    };
+
     const handleMenuChange = (e) => {
+        //console.log(e.target.files[0]);
         setSelectedMenu(e.target.files[0]);
     };
 
     const handleMenuUpload = async () => {
+        ///console.log(selectedMenu)
         const formData = new FormData();
-        formData.append('file', selectedMenu);
+        formData.append('pdfFile', selectedMenu);
+        //formData.append('user', currUser);
+        //for (const [key,value] of formData.entries()){
+        //console.log(key, value)};
 
         try {
-            const uploadResponse = await axios.patch(`${backendUrl}/user/uploadmenu`, 
+            const uploadResponse = await axios.post(`${backendUrl}/user/uploadmenu`, 
                 formData, 
                 { withCredentials: true, 
-                    headers: {Authorization: `Bearer ${token}`, }});
+                    headers: {Authorization: `Bearer ${token}`,'Content-Type': 'multipart/form-data',}});
             alert('Menu uploaded successfully');
+            console.log(uploadResponse.data.message);
+            //const uploadedFileUrl = uploadResponse.data.fileUrl;
+            //setMenuUrl(uploadedFileUrl);
+            //const updateResponse = await axios.patch(`${backendUrl}/user/menu`,
+                //{ newMenuUrl: uploadedFileUrl });
 
-            const uploadedFileUrl = uploadResponse.data.fileUrl;
-            setMenuUrl(uploadedFileUrl);
-            const updateResponse = await axios.patch(`${backendUrl}/user/menu`,
-                { newMenuUrl: uploadedFileUrl });
+            //console.log(updateResponse.data);
+        } catch (error) {
+            alert(error.response.data.error);
+        }
+    };
 
-            console.log(updateResponse.data);
+    const handleAvatarChange = (e) => {
+        //console.log(e.target.files[0]);
+        setSelectedAvatar(e.target.files[0]);
+    };
+
+    const handleAvatarUpload = async () => {
+        ///console.log(selectedMenu)
+        const formData = new FormData();
+        formData.append('file', selectedAvatar);
+        //formData.append('user', currUser);
+        //for (const [key,value] of formData.entries()){
+        //console.log(key, value)};
+
+        try {
+            const uploadResponse = await axios.post(`${backendUrl}/user/uploadavatar`, 
+                formData, 
+                { withCredentials: true, 
+                    headers: {Authorization: `Bearer ${token}`,'Content-Type': 'multipart/form-data',}});
+            alert('Avatar uploaded successfully');
+            console.log(uploadResponse.data.message);
+            //const uploadedFileUrl = uploadResponse.data.fileUrl;
+            //setMenuUrl(uploadedFileUrl);
+            //const updateResponse = await axios.patch(`${backendUrl}/user/menu`,
+                //{ newMenuUrl: uploadedFileUrl });
+
+            //console.log(updateResponse.data);
         } catch (error) {
             alert(error.response.data.error);
         }
@@ -141,7 +221,17 @@ export default function DashboardPage() {
         <SideMenu />
         { isAuthenticated ? (
             <div>
-                <h2 className='justify-center pt-20 pb-8 lg:px-8 text-center text-4xl font-bold text-white'>Welcome, { name }</h2>               
+                { avatarUrl ?
+                 <img src={avatarUrl} alt="Avatar" className='rounded-full h-20 w-20 mb-4' /> 
+                :
+                <div className=' text-white p-6 text-center'>
+                    <h2 className='font-bold text-xl mb-4'>Update Your Avatar</h2>
+                    <input type="file" onChange={handleAvatarChange} />
+                    <button onClick={handleAvatarUpload} className='bg-blue-500 text-white font-bold px-4 py-2 rounded'>Upload</button>
+                </div>
+                }
+
+                <h2 className='justify-center pt-8 pb-8 lg:px-8 text-center text-4xl font-bold text-white'>Welcome, { name }</h2>               
 
                 <div className='grid grid-cols-2 p-12'>
                     <div className='font-bold text-white p-6'>
@@ -149,24 +239,61 @@ export default function DashboardPage() {
                             <h3>Role: { role }</h3> 
                         </div>
 
-                        {/* user.avatar && <img src={user.avatar} alt="Avatar" className='rounded-full h-20 w-20 mb-4' /> */}
-
                         <div className='flex mb-8 text-2xl'>
                             <h3>Email: { email }</h3> 
                         </div>
 
                         {role === "Business Owner" && 
                             <div>
-                                <div className='mb-8 text-2xl'>
-                                    <h3>Operating Hours:</h3> { operatingHours }
+                                <div className='mb-8 flex'>
+                                    <h3 className='text-2xl'>Operating Hours:</h3> 
+                                    <form onSubmit={ handleUpdateOH } className='flex w-full'>
+                                        <input 
+                                            type="text" 
+                                            id="operatingHours" 
+                                            className='border rounded px-3 py-2 w-full text-gray-600' 
+                                            value={ operatingHours }
+                                            onChange={(event) => setOperatingHours(event.target.value)}
+                                            placeholder={ operatingHours }
+                                        />
+                                        <button type='submit' className='bg-blue-500 text-white font-bold px-4 py-2 rounded'>
+                                        Update
+                                        </button>
+                                    </form>
                                 </div>
 
-                                <div className='mb-8 text-2xl'>
-                                    <h3>Address:</h3> { address }
+                                <div className='mb-8 flex'>
+                                    <h3 className='text-2xl mr-12'>Address:</h3> 
+                                    <form onSubmit={ handleUpdateAddress } className='flex w-full'>
+                                        <input 
+                                            type="text" 
+                                            id="address" 
+                                            className='border rounded px-3 py-2 w-full text-gray-600' 
+                                            value={ address }
+                                            onChange={(event) => setAddress(event.target.value)}
+                                            placeholder={ address }
+                                        />
+                                        <button type='submit' className='bg-blue-500 text-white font-bold px-4 py-2 rounded'>
+                                        Update
+                                        </button>
+                                    </form>
                                 </div>
 
-                                <div className='mb-8 text-2xl'>
-                                    <h3>Contact:</h3> { contact }
+                                <div className='mb-8 flex'>
+                                    <h3 className='text-2xl mr-12'>Contact:</h3> 
+                                    <form onSubmit={ handleUpdateContact } className='flex w-full'>
+                                        <input 
+                                            type="tel" 
+                                            id="contact" 
+                                            className='border rounded px-3 py-2 w-full text-gray-600' 
+                                            value={ contact }
+                                            onChange={(event) => setContact(event.target.value)}
+                                            placeholder={ contact }
+                                        />
+                                        <button type='submit' className='bg-blue-500 text-white font-bold px-4 py-2 rounded'>
+                                        Update
+                                        </button>
+                                    </form>
                                 </div>
                             </div>
                         }
