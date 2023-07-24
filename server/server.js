@@ -1,10 +1,9 @@
-//express app
 const express = require("express");
 const app = express();
 
 const mongoose = require("mongoose");
 
-const cloudinary = require('cloudinary').v2;
+const cloudinary = require("cloudinary").v2;
 
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
@@ -16,6 +15,7 @@ const authRoute = require("./Routes/AuthRoute");
 const searchRoute = require("./Routes/SearchRoute");
 const requestRoute = require("./Routes/RequestRoute");
 const dashboardRoute = require("./Routes/DashboardRoute");
+const restaurantRoute = require("./Routes/RestaurantRoute");
 
 mongoose
   .connect(MONGO_URL, {
@@ -25,13 +25,12 @@ mongoose
   .then(() => console.log("MongoDB is  connected successfully"))
   .catch((err) => console.error(err));
 
-cloudinary.config({ 
-    cloud_name: CLOUD_NAME, 
-    api_key: API_KEY, 
-    api_secret: API_SECRET 
-  });
+cloudinary.config({
+  cloud_name: CLOUD_NAME,
+  api_key: API_KEY,
+  api_secret: API_SECRET,
+});
 
-//listen for requests
 app.listen(PORT, () => {
   console.log(`Server is listening on port ${PORT}`);
 });
@@ -52,3 +51,4 @@ app.use("/api", authRoute);
 app.use("/api", searchRoute);
 app.use("/api", requestRoute);
 app.use("/api", dashboardRoute);
+app.use("/api", restaurantRoute);
