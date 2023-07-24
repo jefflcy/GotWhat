@@ -19,20 +19,14 @@ const userSchema = new mongoose.Schema({
     default: "",
   },
   avatar: {
-    type: Buffer,
-    contentType: String,
+    type: String,
   },
   role: {
     type: String,
   },
-  /*role: {
-    type: String,
-    enum: ["user", "biz"],
-  },*/
 });
 
 userSchema.pre("save", async function (next) {
-  this.password = await bcrypt.hash(this.password, 10);
   next();
 });
 

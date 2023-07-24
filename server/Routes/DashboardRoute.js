@@ -1,37 +1,67 @@
 const router = require("express").Router();
 
-//Import Controller
-const { getUser, updatePassword, uploadMenu, updateOH, updateAddress, updateContact, updateMenuUrl, updateBanner, updateBannerUrl } = require('../Controllers/DashboardController');
+/* Import Controllers */
+const {
+  getUser,
+  updatePassword,
+  updateOH,
+  updateAddress,
+  updateContact,
+  uploadAvatar,
+  updateAvatarUrl,
+  uploadMenu,
+  updateMenuUrl,
+  uploadBanner,
+  updateBannerUrl,
+} = require("../Controllers/DashboardController");
 
-//Import Middlewares
-const { validate } = require("../Middlewares/AuthLoginValidator");
+/* Import Middlewares */
+const {
+  validate,
+  isValidTokenMiddleware,
+} = require("../Middlewares/AuthLoginValidator");
 const { upload } = require("../Middlewares/Multer");
+const {
+  resetPasswordValidator,
+  validator,
+} = require("../Middlewares/AuthValidator");
 
-//Get Route to retrive user information
-router.get('/user', validate, getUser);
+/* Get Routes */
+router.get("/user", validate, getUser);
 
-//Patch Route to update user password
-router.patch('/user/password', validate, updatePassword);
+/* Patch Routes */
+router.patch(
+  "/user/password",
+  validate,
+  resetPasswordValidator,
+  validator,
+  updatePassword
+);
+router.patch("/user/OH", validate, updateOH);
+router.patch("/user/address", validate, updateAddress);
+router.patch("/user/contact", validate, updateContact);
+router.patch("/user/menu", validate, updateMenuUrl);
+router.patch("/user/banner", validate, updateBannerUrl);
+router.patch("/user/avatar", validate, updateAvatarUrl);
 
-//Patch Route to update user operating hours
-router.patch('/user/OH', validate, updateOH);
-
-//Patch Route to update user address
-router.patch('/user/address', validate, updateAddress);
-
-//Patch Route to update user operating hours
-router.patch('/user/contact', validate, updateContact);
-
-//Post Route to update/create PDF menu
-router.post('/user/uploadmenu', upload.single('pdfFile'), uploadMenu);
-
-//Patch Route to update user menu Url
-//router.patch('/user/menu', validate, updateMenuUrl);
-
-//Patch Route to update/create Img banner
-router.patch('/user/uploadbanner', validate, updateBanner);
-
-//Patch Route to update user banner Url
-//router.patch('/user/banner', validate, updateBannerUrl);
+/* Post Routes */
+router.post(
+  "/user/uploadavatar",
+  isValidTokenMiddleware,
+  upload.single("avatarImg"),
+  uploadAvatar
+);
+router.post(
+  "/user/uploadmenu",
+  isValidTokenMiddleware,
+  upload.single("pdfFile"),
+  uploadMenu
+);
+router.post(
+  "/user/uploadbanner",
+  isValidTokenMiddleware,
+  upload.single("bannerImg"),
+  uploadBanner
+);
 
 module.exports = router;

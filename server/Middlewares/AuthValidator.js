@@ -15,6 +15,14 @@ const checkValidPassword = () => {
     .withMessage("Password is invalid!");
 };
 
+const checkValidNewPassword = () => {
+  return check("newPassword")
+    .trim()
+    .not()
+    .isEmpty()
+    .withMessage("Password is invalid!");
+};
+
 module.exports.signupValidator = [
   checkValidEmail(),
   checkValidPassword()
@@ -24,7 +32,13 @@ module.exports.signupValidator = [
 
 module.exports.loginValidator = [checkValidEmail(), checkValidPassword()];
 
-module.exports.validate = (req, res, next) => {
+module.exports.resetPasswordValidator = [
+  checkValidNewPassword()
+    .isLength({ min: 8, max: 20 })
+    .withMessage("Password must be 8 to 20 characters long!"),
+];
+
+module.exports.validator = (req, res, next) => {
   const error = validationResult(req).array();
   if (error.length) {
     return res.status(400).json({ error: error[0].msg });

@@ -18,10 +18,6 @@ const bizSchema = new mongoose.Schema({
     trim: true,
     default: "",
   },
-  avatar: {
-    type: Buffer,
-    contentType: String,
-  },
   operatingHours: {
     type: String,
   },
@@ -37,21 +33,15 @@ const bizSchema = new mongoose.Schema({
   bannerUrl: {
     type: String,
   },
-  /*menu: {
-    type: Buffer,
-    contentType: String,
+  avatarUrl: {
+    type: String,
   },
-  banner: {
-    type: Buffer,
-    contentType: String,
-  },*/
   role: {
     type: String,
   },
 });
 
 bizSchema.pre("save", async function (next) {
-  this.password = await bcrypt.hash(this.password, 10);
   next();
 });
 
