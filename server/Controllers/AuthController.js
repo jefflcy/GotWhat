@@ -22,13 +22,13 @@ module.exports.Signup = async (req, res) => {
     }
 
     // Hash the password
-    const hashedPassword = await bcrypt.hash(this.password, 10);
+    const hashedPassword = await bcrypt.hash(password, 10);
 
     // Create the new user/biz in UserModel/BizOwnerModel
     const user = await model.create({
       name,
       email,
-      hashedPassword,
+      password: hashedPassword,
       role,
     });
 
@@ -37,6 +37,7 @@ module.exports.Signup = async (req, res) => {
       success: true,
     });
   } catch (error) {
+    console.log(error);
     return res
       .status(500)
       .json({ message: "Internal server error", success: false });
