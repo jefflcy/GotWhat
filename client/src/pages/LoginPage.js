@@ -13,8 +13,8 @@ export default function LoginPage() {
 
   useEffect(() => {
     if (isAuthenticated) {
-      //alert("You are already logged in!");
-      navigate("/home");
+      alert("You are already logged in!");
+      navigate("/dashboard");
     }
   }, [navigate, isAuthenticated]);
 
