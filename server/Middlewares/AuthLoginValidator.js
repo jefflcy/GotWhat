@@ -3,34 +3,45 @@ const User = require("../Models/UserModel");
 const BizOwner = require("../Models/BizOwnerModel");
 const { TOKEN_KEY } = process.env;
 
-exports.validate = async (req, res, next) => {
-    const token = req.headers.authorization;
+module.exports.validate = async (req, res, next) => {
+  const token = req.headers.authorization;
 
-    const jwtToken = token.split("Bearer ")[1];
-    
-    if (!jwtToken) {
-        return res
-            .status(401)
-            .json({ message: "Invalid token!" });
-    }
+  const jwtToken = token.split("Bearer ")[1];
 
-    const decode = jwt.verify(jwtToken, TOKEN_KEY);
-    const { id } = decode;
+  if (!jwtToken) {
+    return res.status(401).json({ message: "Invalid token!" });
+  }
 
-    const [user, biz] = await Promise.all([
-        User.findById(id),
-        BizOwner.findById(id),
-    ]);
+  const { id } = jwt.verify(jwtToken, TOKEN_KEY);
 
-    if (!user && !biz) {
-        return res
-            .status(404)
-            .json({ message: 'User not found' });
-    }
+  const [user, biz] = await Promise.all([
+    User.findById(id),
+    BizOwner.findById(id),
+  ]);
 
-    const target = user || biz;
+  if (!user && !biz) {
+    return res.status(404).json({ message: "User not found" });
+  }
 
-    req.user = target;
-    //console.log(req);
+  let target = user || biz;
+
+  req.user = target;
+  next();
+};
+
+module.exports.isValidTokenMiddleware = async (req, res, next) => {
+  const token = req.headers.authorization;
+  if (!token) {
+    return res.status(401).json({ message: "Missing token!" });
+  }
+
+  const jwtToken = token.split("Bearer ")[1];
+
+  try {
+    jwt.verify(jwtToken, TOKEN_KEY);
     next();
+  } catch (error) {
+    // catching jwt error here means jwtToken is undefined/expired
+    return res.status(401).json({ message: "Invalid/Expired token!" });
+  }
 };
