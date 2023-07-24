@@ -1,19 +1,24 @@
 const router = require("express").Router();
 
 /* Import Controllers */
-const { Signup, Login } = require("../Controllers/AuthController");
+const {
+  Signup,
+  Login,
+  isValidToken,
+} = require("../Controllers/AuthController");
 
 /* Import Middlewares */
 const {
   signupValidator,
   loginValidator,
-  validate,
+  validator,
 } = require("../Middlewares/AuthValidator");
 
 /* Post Routes */
-router.post("/signup", signupValidator, validate, Signup);
-router.post("/login", loginValidator, validate, Login);
+router.post("/signup", signupValidator, validator, Signup);
+router.post("/login", loginValidator, validator, Login);
 
 /* Get Routes */
+router.get("/isValidToken", isValidToken);
 
 module.exports = router;
