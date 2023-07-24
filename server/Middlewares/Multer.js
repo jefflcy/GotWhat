@@ -1,21 +1,24 @@
-const multer = require('multer');
-const path = require('path');
+const multer = require("multer");
+const fs = require("fs");
+
+// Create the 'uploads/' directory if it doesn't exist
+const uploadDir = "uploads/";
+if (!fs.existsSync(uploadDir)) {
+  fs.mkdirSync(uploadDir);
+}
 
 const storage = multer.diskStorage({
-    destination: (req, file, cb) => {
-      // This will save the uploaded files in a folder named 'uploads' within your project directory
-      const destinationPath = path.join('/Users/102al/Desktop/Orbital/GotWhat/server/', 'uploads');
-      //callback function that determines the destination directory for the uploaded files
-      cb(null, destinationPath);
-    }, 
-    filename: (req, file, cb) => {
-          // Generate a unique filename for the uploaded file.
-      // You can use Date.now() or any other logic to generate a unique filename.
-      const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
-      cb(null, file.fieldname + '-' + uniqueSuffix + '.pdf');
-    },
-  });
-  
-const upload = multer({ storage: storage });
+  destination: function (req, file, cb) {
+    // Specify the directory where the uploaded files should be stored
+    cb(null, uploadDir);
+  },
+  filename: function (req, file, cb) {
+    // Generate a unique file name for the uploaded file
+    const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
+    cb(null, file.fieldname + "-" + uniqueSuffix + ".pdf");
+  },
+});
 
-module.exports = { upload };
+module.exports.upload = multer({
+  storage: storage,
+});
