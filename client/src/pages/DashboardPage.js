@@ -499,10 +499,12 @@ export default function DashboardPage() {
         </div>
       ) : (
         <div>
-          <h2 className="flex h-screen items-center justify-center text-4xl font-bold text-white">
+          <Link
+            to="/login"
+            className="flex h-screen items-center justify-center text-4xl font-bold text-white"
+          >
             Please login to access the dashboard
-          </h2>
-          {/* render login form or redirect to login page or can just leave it for user to go to side menu to click on log in */}
+          </Link>
         </div>
       )}
       ;
