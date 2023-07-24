@@ -59,7 +59,7 @@ export default function SignupPage() {
           Please fill in this form to create an account.
         </p>
       </div>
-      
+
       <div className="flex justify-center">
         <label className="toggle-switch flex items-center cursor-pointer">
           <input
@@ -84,13 +84,13 @@ export default function SignupPage() {
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>
             <label className="block text-large font-bold leading-6 text-gray-900">
-              Name
+              {isChecked ? "Restaurant Name" : "Name"}
             </label>
             <input
               type="text"
               value={name}
               onChange={(e) => setName(e.target.value)}
-              placeholder="jefflee"
+              placeholder={isChecked ? "Lee's Restaurant" : "Jeff Lee"}
               autoComplete="name"
               required
               className="mt-4 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"

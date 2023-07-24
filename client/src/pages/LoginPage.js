@@ -13,7 +13,7 @@ export default function LoginPage() {
 
   useEffect(() => {
     if (isAuthenticated) {
-      alert("You are already logged in!");
+      //alert("You are already logged in!");
       navigate("/home");
     }
   }, [navigate, isAuthenticated]);
@@ -30,7 +30,7 @@ export default function LoginPage() {
       if (data.success) {
         const token = data.token;
 
-        // Store token in context and localStorage
+        // Store token in context
         login(token);
 
         alert(data.message);
@@ -38,8 +38,6 @@ export default function LoginPage() {
         // Redirect the user to account page
         navigate("/home");
       }
-
-      //navigate(`/user/${data.user._id}`);
     } catch (error) {
       alert(error.response.data.message);
     }
