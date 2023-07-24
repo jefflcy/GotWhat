@@ -2,6 +2,8 @@ const User = require("../Models/UserModel");
 const BizOwner = require("../Models/BizOwnerModel");
 const { createSecretToken } = require("../util/SecretToken");
 const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
+const { TOKEN_KEY } = process.env;
 
 module.exports.Signup = async (req, res) => {
   try {
@@ -19,11 +21,14 @@ module.exports.Signup = async (req, res) => {
       return res.status(401).json({ message: "User already exists" });
     }
 
+    // Hash the password
+    const hashedPassword = await bcrypt.hash(this.password, 10);
+
     // Create the new user/biz in UserModel/BizOwnerModel
     const user = await model.create({
       name,
       email,
-      password,
+      hashedPassword,
       role,
     });
 
@@ -73,5 +78,24 @@ module.exports.Login = async (req, res) => {
     return res
       .status(500)
       .json({ message: "Internal server error", success: false });
+  }
+};
+
+module.exports.isValidToken = async (req, res) => {
+  const token = req.headers.authorization;
+  if (!token) {
+    return res.status(401).json({ message: "Missing token!", valid: false });
+  }
+
+  const jwtToken = token.split("Bearer ")[1];
+
+  try {
+    jwt.verify(jwtToken, TOKEN_KEY);
+    res.status(200).json({ message: "Valid token!", valid: true });
+  } catch (error) {
+    // catching jwt error here means jwtToken is undefined/expired
+    return res
+      .status(401)
+      .json({ message: "Invalid/Expired token!", valid: false });
   }
 };
