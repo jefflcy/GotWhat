@@ -35,7 +35,6 @@ export default function DashboardPage() {
     if (isAuthenticated) {
       const getUserInformation = async () => {
         try {
-          //check route
           const response = await axios.get(`${backendUrl}/user`, {
             withCredentials: true,
             headers: { Authorization: `Bearer ${token}` },
@@ -94,7 +93,6 @@ export default function DashboardPage() {
     }
 
     try {
-      //check route
       const response = await axios.patch(
         `${backendUrl}/user/password`,
         { currentPassword, newPassword },

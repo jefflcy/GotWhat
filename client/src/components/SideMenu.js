@@ -32,6 +32,7 @@ export default function SideMenu() {
           <li className="p-4 border-b border-black">
             <Link to="/home">Home</Link>
           </li>
+          
           { isAuthenticated ? 
             <li className="p-4 border-b border-black">
               <Link to="/dashboard">Dashboard</Link>
@@ -39,12 +40,7 @@ export default function SideMenu() {
           : <li className="p-4 border-b border-black">
               <Link to="/login">Login</Link>
             </li>}
-          {/*
-          CHANGE THIS TO MY ACCOUNT PAGE CONDITIONALLY RENDERED IF LOGGED IN
-          <li className="p-4 border-b border-black">
-            <Link to="/restaurant">Mock</Link>
-          </li>
-      */}
+
           <li className="p-4 ">
             <Link to="/request">Request</Link>
           </li>
