@@ -1,4 +1,4 @@
-﻿# **ORBITAL 23 - MILESTONE 2**
+﻿# **ORBITAL 23 - MILESTONE 3**
 
 ## **Team Name:**
 
@@ -46,62 +46,6 @@ We hope to make restaurant menus (and possibly their latest updates) readily acc
 
 The website provides a neat “search engine-like” interface for customers to look for a restaurant’s menu and reviews. Business owners can upload the soft copies of the official menus to attract customers online.
 
-The website has a database of restaurants, along with its menu & reviews.
-
-## **Features to be completed by the mid of June:**
-
-### 1. Webpage – Main Functionality
-
-    a. Allow account creation for business owners / customers
-
-    b. Allow business owners to upload menu PDFs/images
-
-    c. Allow users to search for a restaurant’s menu
-
-    d. Display restaurant basic information (address, operating hours, contact information & social media accounts)
-
-## **MILESTONE 2 UPDATE**
-
-FEATURES COMPLETED:
-
-- Web Page frontend on React (Home, Login, Signup, Restaurant, User Account, Change Password)
-
-- Navigation Bar
-
-- Signup/Login Routing for both front and backend with MongoDB
-
-FEATURES TO BE COMPLETED:
-
-- Successful signup/login notices and page navigation upon successful request
-
-- Protected Routes with JWT
-
-- Updating of user account details (name for normal user, basic info + menu for business owners)
-
-- Backend API for fetching of user data and Search results
-
-## **Features to be completed by the END of July:**
-
-### 2. Webpage – Review Section
-
-    a. Allow customers to leave ratings & reviews (& upload photos) for restaurant
-
-    b. Allow business owners to reply to reviews
-
-### 3. Webpage – Request Functionality
-
-    a. Allow customers to suggest “missing restaurants” to be listed on webpage
-
-    b. Allow backend to keep track and possibly contact restaurant to get on our webpage
-
-## **Tech Stack:**
-
-1. React (Frontend)
-
-2. Express + Node.js
-
-3. MongoDB (Backend)
-
 ## **How are we different from similar platforms?**
 
 - Burpple
@@ -112,23 +56,71 @@ FEATURES TO BE COMPLETED:
 
   - Our website is more menu-centric, whereas Oddle is centered more around its food ordering services (Delivery, Pickup, Reservations).
 
-## **Development Plan:**
+## **Tech Stack:**
+1. React.js **[ Client ]**
+2. Express + Node.js **[ Server ]**
+3. MongoDB + Cloudinary **[ Server / DB ]**
 
-1st week of July:
+## **Features Implemented:**
+LINK TO GITHUB REPO: https://github.com/jefflcy/GotWhat
 
-- Implement portal for business owners to edit restaurant menu/user to edit user info
-- Design successful login notice
-- Design search results containter
-- Backend API for search results + routing
+1. Webpage - Main Functionalities: 
+a. Allow account creation for business owners / customer **[ LOGIN / SIGNUP ]**
+b. Allow business owners to upload menu PDFs/images **[ DASHBOARD ]**
+c. Allow users to search for a restaurant’s menu **[ SEARCH ]**
+d. Display restaurant basic information (address, operating hours, contact information) **[ RESTAURANT PAGE]**
 
-2nd week of July:
+    **FOR LOGIN / SIGNUP:**
+    - Frontend handling via React. Input management and HTTP requests by Axios to the backend.
+    - Backend handles the request via the route “/api/login” and “/api/signup”.
+    - Requests will have their inputs checked by the middlewares “loginValidator” and “signupValidator” using express-validator and their respective messages will be handled by the next middleware “validator”, and finally by the respective controllers “Login” and “Signup”.
+    **Backend Files involved: AuthRoute.js, AuthValidator.js, AuthController.js**
+    
+    **FOR DASHBOARD:**
+    - Frontend gets user/restaurant information via a useEffect hook to check if the browser is authenticated via AuthContext, and sets the state of the different components on the DashboardPage.
+    - Backend handles the request via the route “/api/user/” and the various endpoints (password, OH, address, contact, menu, banner, avatar, uploadavatar, uploadmenu, uploadbanner).
+    - Routes are protected by isValidTokenMiddleware for uploading of assets, and validate middleware that checks if the browser is authenticated.
+    - Uploading of assets to Cloudinary requires multer middleware to temporarily store the file to get a file path. Cloudinary returns a url to the file which is then stored in the MongoDB.
+    **Backend Files involved: DashboardRoute.js, AuthLoginValidator.js, Multer.js, DashboardController.js**
+    
+    **FOR SEARCH:**
+    - SearchBar is a React component on the Homepage.
+    - SearchBar calls back the handleSearch function in the onSearch prop which is passed down from the parent (Homepage).
+    - Search is initiated via an Axios GET request.
+    - Backend handles query and launches a RegExp search on the Business Owners schema to find a matching restaurant name. An array of the Business Owner (restaurant) objects are returned.
+    - Frontend handles the searchResult array into a dropdown menu and links it to the Restaurant page via the obj._id property.
+    **Backend Files involved: SearchRoute.js, SearchController.js**
+    
+    **FOR RESTAURANT PAGE:**
+    - Frontend uses a useEffect hook to make an Axios GET request to the backend.
+    - Backend handles the route by checking the restaurantId for the req.params and searches the Business Owners schema in MongoDB for the matching obj._id, and returns the restaurant object.
+    - Restaurant object is then handled by the frontend and loads up the assets to RestaurantCard and MenuViewer React components.
+    **Backend Files involved: RestaurantRoute.js, RestaurantController.js**
 
-- Implementation of Review Section
-- Implementation of Request Page
+2. Webpage - Request Functionality **[ REQUEST ]** : 
+a. Allow customers to suggest “missing restaurants” to be listed on webpage
+b. Allows backend to keep track of requests via email and MongoDB
 
-3rd week of July:
+    **FOR REQUEST:**
+    - Backend handles form inputs by saving the request in MongoDB under the Request Schema and also activates nodemailer to send an email to our business email.
+    **Backend Files involved:  RequesttRoute.js, RequestController.js**
+    
+**Features to be implemented in the future:**
+3. Webpage – Review Section: 
+a. Allow customers to leave ratings & reviews for restaurant
+b. Allow business owners to reply to reviews
+    
+## **Challenges Faced:**
+- Struggled with backend code for middlewares, controllers, endpoints, APIs
+- Struggled with linking backend and frontend (especially signup/login Auth contexts and isAuth backend checking)
+- Struggled with React tailwindcss designs
+- Struggled a lot with debugging clashing implementation of features (password updating, route protection) 
+- Yet to deploy webapp
 
-- Testing and debugging
+## **Software Engineering Practices:**
+- Version control with Git (via GitHub)
+- Model-View-Controller (MVC) architectural pattern with React app and the backend server
+- JWT tokens for Web App Authentication
 
 ## **Website User Flow:**
 
