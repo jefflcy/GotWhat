@@ -193,7 +193,7 @@ The website provides a neat “search engine-like” interface for customers to 
 
 ### Dashboard Page (before)
 
-<img src="./images/dashboard before.png" alt="dash1"/>
+<img src="./images/Dashboard before.png" alt="dash1"/>
 
 ### Dashboard Page (after)
 
